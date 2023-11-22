@@ -66,6 +66,7 @@ def resize_images(input_dir: Path,image_list: List[str],output_dir: Path):
         return prev_shape
 
 def rotate_images(images_dir: Path,image_list: List[str],output_dir: Path, model_weights_path):
+    print("Rotate images")
     # rotate image
     n_rotated = 0
     n_total = len(image_list)
