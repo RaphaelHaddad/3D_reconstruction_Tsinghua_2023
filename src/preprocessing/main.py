@@ -1,24 +1,27 @@
 import argparse
 import os
 
-from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, Tuple
 from src.config.paths import DataPaths
 from .rotate import rotate_images 
+from .pairs import compute_pairs 
 
 def preprocess(
     paths: DataPaths,
     args: argparse.Namespace
 ) -> Tuple[Dict[str, Any], bool]:
-    """Preprocess images in input_dir and save them to output_dir.
+    """Preprocess images and output rotated images, and computed pairs.
 
     Args:s
-        input_dir (Path): Directory containing the a folder "images" with the images to preprocess.
+        paths (DataPaths): contains all defined paths for the computation results.
         args (argparse.Namespace): Arguments.
     """
 
     image_list = os.listdir(paths.input_dir_images)
 
-    # rotate image
-    rotate_images(paths.input_dir_images, image_list,paths.rotated_image_dir, paths.rotation_model_weights)
+    # rotate images
+    rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
+
+    # compute pairs 
+    compute_pairs(paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path)
 

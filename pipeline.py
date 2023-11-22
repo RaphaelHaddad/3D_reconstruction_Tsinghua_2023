@@ -16,6 +16,5 @@ if __name__ == '__main__':
 
     paths = DataPaths(data_dir,output_dir,dataset,scene,mode)
 
-    # rotate image
+    # preprocess images
     preprocess(paths,args=None)
-
