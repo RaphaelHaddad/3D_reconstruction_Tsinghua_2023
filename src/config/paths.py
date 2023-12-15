@@ -34,6 +34,7 @@ class DataPaths:
         self.features_path = self.output_scene_dir / "features.h5"
         self.matches_path = self.output_scene_dir / "matches.h5"
 
+        self.cropped_image_dir = self.output_scene_dir / "images_cropped"
         # create directories
         self.output_scene_dir.mkdir(parents=True, exist_ok=True)
         self.rotated_image_dir.mkdir(parents=True, exist_ok=True)

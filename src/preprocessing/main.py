@@ -5,6 +5,7 @@ from typing import Any, Dict, Tuple
 from src.config.paths import DataPaths
 from .rotate import rotate_images 
 from .pairs import compute_pairs 
+from .crop import crop_images 
 
 def preprocess(
     paths: DataPaths,
@@ -24,4 +25,7 @@ def preprocess(
 
     # compute pairs 
     compute_pairs(paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path)
+
+    # crop images 
+    crop_images(paths.rotated_image_dir, paths.pairs_path, paths.cropped_image_dir)
 
