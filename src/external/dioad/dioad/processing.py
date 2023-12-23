@@ -4,7 +4,7 @@ import os
 
 import cv2
 import numpy as np
-from dioad.utils import rotate_preserve_size
+from .utils import rotate_preserve_size
 
 logger = logging.getLogger("transformers")
 logger.setLevel(logging.ERROR)

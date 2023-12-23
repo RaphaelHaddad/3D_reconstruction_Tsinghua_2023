@@ -77,7 +77,6 @@ def rotate_images(images_dir: Path,image_list: List[str],output_dir: Path, model
     for gpu in gpus:
         tf.config.experimental.set_memory_growth(gpu, True)
 
-
     deep_orientation = DioadInfer.Inference(load_model_path=model_weights_path)
 
     for image_name in tqdm(image_list, desc=f"Rotating {images_dir.name}", ncols=80):

@@ -1,8 +1,7 @@
 import argparse
 
-from dioad.models import load_vit_model
-from dioad.processing import postprocess, preprocess
-
+from .models import load_vit_model
+from .processing import postprocess, preprocess
 
 class Inference:
     def __init__(self, load_model_path="weights/model-vit-ang-loss.h5"):
