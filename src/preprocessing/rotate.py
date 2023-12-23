@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import List, Tuple
 
 import cv2
-import dioad.infer
+from src.external.dioad.dioad import infer as DioadInfer
 import numpy as np
 from tqdm import tqdm
 
@@ -78,7 +78,7 @@ def rotate_images(images_dir: Path,image_list: List[str],output_dir: Path, model
         tf.config.experimental.set_memory_growth(gpu, True)
 
 
-    deep_orientation = dioad.infer.Inference(load_model_path=model_weights_path)
+    deep_orientation = DioadInfer.Inference(load_model_path=model_weights_path)
 
     for image_name in tqdm(image_list, desc=f"Rotating {images_dir.name}", ncols=80):
         img_path = images_dir / image_name

@@ -139,6 +139,11 @@ confs = {
         'output': 'global-feats-cosplace',
         'model': {'name': 'cosplace'},
         'preprocessing': {'resize_max': 1024},
+    },
+    'eigenplaces': {
+        'output': 'global-feats-eigenplaces',
+        'model': {'name': 'eigenplaces'},
+        'preprocessing': {'resize_max': 1024},
     }
 }
 
