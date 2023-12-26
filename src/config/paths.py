@@ -23,7 +23,12 @@ class DataPaths:
         
         self.output_scene_dir = output_dir / dataset / scene
 
-        
+        # for preprocessing keypoints
+        self.superglue_keypoints_dir = self.output_scene_dir / "superglue" 
+        self.loftr_keypoints_dir = self.output_scene_dir / "loftr" 
+        self.superglue_keypoints_pickle = self.superglue_keypoints_dir / "keypoints.pickle"
+        self.loftr_keypoints_pickle = self.loftr_keypoints_dir / "keypoints.pickle"
+
         # for rotation 
         self.rotated_image_dir = self.output_scene_dir / "images_rotated"
         self.rotated_features_path = self.output_scene_dir / "features_rotated.h5"
@@ -34,7 +39,12 @@ class DataPaths:
         self.features_path = self.output_scene_dir / "features.h5"
         self.matches_path = self.output_scene_dir / "matches.h5"
 
+        # for cropping
         self.cropped_image_dir = self.output_scene_dir / "images_cropped"
+
         # create directories
         self.output_scene_dir.mkdir(parents=True, exist_ok=True)
         self.rotated_image_dir.mkdir(parents=True, exist_ok=True)
+        self.superglue_keypoints_dir.mkdir(parents=True, exist_ok=True)
+        self.loftr_keypoints_dir.mkdir(parents=True, exist_ok=True)
+        self.cropped_image_dir.mkdir(parents=True, exist_ok=True)
