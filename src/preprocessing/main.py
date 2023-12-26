@@ -3,7 +3,7 @@ import os
 
 from typing import Any, Dict, Tuple
 from src.config.paths import DataPaths
-from .rotate import rotate_images 
+# from .rotate import rotate_images 
 from .pairs import compute_pairs 
 from .crop import crop_images 
 
@@ -21,7 +21,7 @@ def preprocess(
     image_list = os.listdir(paths.input_dir_images)
 
     # rotate images
-    rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
+    # rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
     # compute pairs 
     compute_pairs(paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path)
