@@ -2,7 +2,7 @@ import argparse
 import os
 
 from typing import Any, Dict, Tuple
-from kp_imc2023.config.paths import DataPaths
+from kp_imc23.config.paths import DataPaths
 # General utilities
 import os
 import torch

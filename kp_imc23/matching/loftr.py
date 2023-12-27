@@ -2,9 +2,9 @@ import pickle
 import numpy as np
 from tqdm import tqdm
 from pathlib import Path
-from kp_imc2023.preprocessing.pairs import get_pairs
-from kp_imc2023.external.superglue.models.matching import Matching
-from kp_imc2023.external.superglue.models.utils import read_image
+from kp_imc23.preprocessing.pairs import get_pairs
+from kp_imc23.external.superglue.models.matching import Matching
+from kp_imc23.external.superglue.models.utils import read_image
 import torch
 import kornia as K
 import kornia.feature as KF
