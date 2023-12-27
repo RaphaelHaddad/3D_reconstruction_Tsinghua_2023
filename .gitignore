@@ -13,3 +13,5 @@ train/
 test/
 weights/
 output/
+
+*.tar.gz
