@@ -14,9 +14,11 @@ class DataPaths:
         """
         if mode not in {"train", "test"}:
             raise ValueError(f"Invalid mode: {mode}")
-
+        
+        # weights
         self.model_weights = Path(f"{data_dir}/weights")
         self.rotation_model_weights = self.model_weights / "model-vit-ang-loss.h5"
+        self.loftr_model_weights = self.model_weights / "outdoor_ds.ckpt"
 
         self.input_dir = Path(f"{data_dir}/{mode}/{dataset}/{scene}")
         self.input_dir_images = Path(f"{data_dir}/{mode}/{dataset}/{scene}/images")

@@ -27,16 +27,20 @@ def concat_keypoints(keypoints1_pickle,keypoints2_pickle):
 
     concatenated = {}
 
-    for image,v in keypoints1:
-        for image_pair,pair_keypoints in v:
+    for image,v in keypoints1.items():
+        concatenated[image] = {}
+        for image_pair,pair_keypoints in v.items():
+            
             kp0 = pair_keypoints["keypoints0"]
             kp1 = pair_keypoints["keypoints0"]
 
             kp00 = keypoints2[image][image_pair]["keypoints0"]
             kp11 = keypoints2[image][image_pair]["keypoints0"]
 
-            concatenated[image][image_pair]["keypoints0"] = np.vstack((kp0,kp00)) 
-            concatenated[image][image_pair]["keypoints1"] = np.vstack((kp1,kp11)) 
+            concatenated[image][image_pair] = {
+                "keypoints0":np.vstack((kp0,kp00)),
+                "keypoints1":np.vstack((kp1,kp11)) 
+            }
     
     return concatenated
 
@@ -77,15 +81,15 @@ def preprocess(
     image_list = os.listdir(paths.input_dir_images)
 
     # rotate images
-    rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
+    # rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
     # compute pairs 
-    compute_pairs(paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path)
+    # compute_pairs(paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path, 10)
 
     # TODO: run in parallel
     # extract important keypoints 
-    superglue(paths.rotated_image_dir,paths.pairs_path, paths.superglue_keypoints_pickle)
-    loftr(paths.rotated_image_dir,paths.pairs_path, paths.superglue_keypoints_pickle)
+    # superglue(paths.rotated_image_dir,paths.pairs_path, paths.superglue_keypoints_pickle)
+    # loftr(paths.rotated_image_dir,paths.pairs_path,paths.loftr_model_weights, paths.loftr_keypoints_dir)
     
     # concat important keypoints
     keypoints = concat_keypoints(paths.superglue_keypoints_pickle,paths.loftr_keypoints_pickle)
@@ -95,3 +99,5 @@ def preprocess(
 
     # build superlist
     superlist = build_superlist(keypoints)
+
+    return superlist, keypoints
