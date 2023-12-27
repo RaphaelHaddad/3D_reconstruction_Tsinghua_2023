@@ -827,10 +827,15 @@ def match_loftr(img_fnames,
 def match_dkmv3(img_fnames, index_pairs,
                         feature_dir = '.featureout_loftr',\
                         device=torch.device('cpu'),\
-                        resize_to_=(600, 800), th_conf=0.7, min_matches=10) :
+                        resize_to_=(384, 512), th_conf=0.7, min_matches=10) :
 
     matcher = DKMv3_outdoor(device=device)
-
+    
+    # Optimisation for less dense matches and less computations
+    matcher.sample_thresh = 0.2
+    matcher.w_resized = 864
+    matcher.h_resized = 1152
+    matcher.upsample_preds = False
 
     with h5py.File(f'{feature_dir}/matches_loftr.h5', mode='w') as f_match:
         for pair_idx in progress_bar(index_pairs):
