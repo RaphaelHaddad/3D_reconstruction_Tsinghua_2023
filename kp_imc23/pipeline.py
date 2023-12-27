@@ -28,15 +28,18 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
 
     for file, id in zip(superGlueWeights, ids):
         path = f"./weights/{file}"
+        print(path)
         if not os.path.exists(path):
             print(f"Downloading weights {file}...")
             gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
 
     # download weights of loftr
+    id = "1M-VD35-qdB5Iw-AtbDBCKC7hPolFW9UY"
+    path = f"./weights/outdoor_ds.ckpt"
+    print(path)
     if not os.path.exists(path):
-        id = "1M-VD35-qdB5Iw-AtbDBCKC7hPolFW9UY"
-        print(f"Downloading weights {file}...")
-        gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", f"./weights/outdoor_ds.ckpt", quiet=False)
+        print(f"Downloading weights {path}...")
+        gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
     
 
     paths = DataPaths(Path(data_dir), Path(output_dir), dataset, scene, mode)
