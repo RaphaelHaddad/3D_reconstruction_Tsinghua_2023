@@ -16,7 +16,7 @@ class DataPaths:
             raise ValueError(f"Invalid mode: {mode}")
         
         # weights
-        self.model_weights = Path("/weights")
+        self.model_weights = Path("./weights")
         self.rotation_model_weights = self.model_weights / "model-vit-ang-loss.h5"
         self.loftr_model_weights = self.model_weights / "outdoor_ds.ckpt"
 
