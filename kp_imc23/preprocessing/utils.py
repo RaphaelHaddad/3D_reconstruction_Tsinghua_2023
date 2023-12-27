@@ -1,4 +1,5 @@
 import pickle
+import numpy as np
 
 
 def concat_keypoints(keypoints1_pickle,keypoints2_pickle):
