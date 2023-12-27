@@ -44,7 +44,7 @@ def preprocess(
 
     # crop images 
     chosen_dir_image = paths.input_dir_images
-    crop_images(chosen_dir_image, paths.pairs_path, paths.cropped_image_dir,keypoints)
+    # crop_images(chosen_dir_image, paths.pairs_path, paths.cropped_image_dir,keypoints)
 
     # build superlist
     superlist = build_superlist(keypoints)
