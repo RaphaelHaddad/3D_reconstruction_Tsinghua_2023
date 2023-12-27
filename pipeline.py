@@ -43,9 +43,7 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
 
     paths = DataPaths(Path(data_dir), Path(output_dir), dataset, scene, mode)
     return paths
-
-if __name__ == '__main__':
-
+def main():
     dataset, scene = "heritage", "cyprus"
     paths = configurate(
         data_dir="./",
@@ -59,3 +57,6 @@ if __name__ == '__main__':
     keypoints = preprocess(paths,args=None)
     
     database_colmap_run(paths, dataset, scene, keypoints, args=None)
+
+if __name__ == '__main__':
+    main()
