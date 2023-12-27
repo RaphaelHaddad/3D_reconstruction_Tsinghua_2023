@@ -26,7 +26,7 @@ def database_colmap_run(
     out_match, unique_kpts = keypoints_to_out_match_unique_kpts(keypoints, paths.matches_path)
 
     # Save keypoints and matches into database
-    register_keypoints(paths.keypoints_path, unique_kpts)
+    register_keypoints(paths.keypoints_final_path, unique_kpts)
     register_matches(paths.matches_final_path, out_match, unique_kpts)
 
     # Import into database COLMAP
