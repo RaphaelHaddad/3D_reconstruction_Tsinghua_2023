@@ -29,15 +29,15 @@ def preprocess(
     image_list = os.listdir(paths.input_dir_images)
 
     # rotate images
-    rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
+    # rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
-    # compute pairs 
-    compute_pairs(paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path)
+    # # compute pairs 
+    # compute_pairs(paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path)
 
-    # TODO: run in parallel
-    # extract important keypoints 
-    superglue(paths.rotated_image_dir,paths.pairs_path, paths.superglue_keypoints_pickle)
-    loftr(paths.rotated_image_dir,paths.pairs_path ,paths.loftr_model_weights, paths.loftr_keypoints_pickle)
+    # # TODO: run in parallel
+    # # extract important keypoints 
+    # superglue(paths.rotated_image_dir,paths.pairs_path, paths.superglue_keypoints_pickle)
+    # loftr(paths.rotated_image_dir,paths.pairs_path ,paths.loftr_model_weights, paths.loftr_keypoints_pickle)
     
     # concat important keypoints
     keypoints = concat_keypoints(paths.superglue_keypoints_pickle,paths.loftr_keypoints_pickle)
@@ -47,3 +47,5 @@ def preprocess(
 
     # build superlist
     superlist = build_superlist(keypoints)
+
+    return keypoints

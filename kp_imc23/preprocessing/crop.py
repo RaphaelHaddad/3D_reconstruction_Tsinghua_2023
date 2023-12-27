@@ -36,6 +36,7 @@ def crop_image(image, matching_points, eps, min_samples=5):
     
     return cropped_image,min_x,min_y
 
+
 def crop_images(images_dir: Path,pairs_path,output_dir,keypoints,resize = [1376,]):
     matches_per_image = {}
 
