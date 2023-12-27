@@ -9,8 +9,8 @@ from kp_imc23.config.paths import DataPaths
 from .rotate import rotate_images 
 from .pairs import compute_pairs 
 from .crop import crop_images 
-from src.matching.loftr import loftr
-from src.matching.superglue import superglue
+from kp_imc23.matching.loftr import loftr
+from kp_imc23.matching.superglue import superglue
 from .utils import concat_keypoints, build_superlist
 
 
