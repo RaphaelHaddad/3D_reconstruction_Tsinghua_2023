@@ -47,6 +47,6 @@ def database_colmap_run(
 
     # Create submission
     image_list = os.listdir(image_dir_used)
-    create_submission(out_results, image_list, paths.submission_path)
+    create_submission(out_results, image_list, paths.submission_path,dataset,scene)
 
     
