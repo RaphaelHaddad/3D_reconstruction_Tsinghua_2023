@@ -306,8 +306,8 @@ def COLMAP_mapping(colmap_output, database_path, image_dir_used):
     mapper_options.ba_global_max_num_iterations = 1
     os.makedirs(colmap_output, exist_ok=True)
 
-    maps = pycolmap.incremental_mapping(database_path=database_path, image_path=image_dir_used,\
-                                    output_path=colmap_output, options=mapper_options, num_threads=8)
+    maps = pycolmap.incremental_mapping(database_path=str(database_path), image_path=str(image_dir_used),\
+                                    output_path=str(colmap_output), options=mapper_options, num_threads=8)
     
     return maps
 

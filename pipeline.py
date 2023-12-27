@@ -38,9 +38,9 @@ if __name__ == '__main__':
     )
 
     # preprocess images
-    keypoints = preprocess(paths,args=None)
+    keypoints, image_dir_used = preprocess(paths,args=None)
 
     # Database
-    database_colmap_run(paths, dataset, scene, keypoints, args=None)
+    database_colmap_run(paths, image_dir_used, dataset, scene, keypoints, args=None)
 
     
