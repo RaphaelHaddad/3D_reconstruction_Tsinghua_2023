@@ -46,7 +46,7 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
 def main():
     dataset, scene = "heritage", "cyprus"
     paths = configurate(
-        data_dir="./",
+        data_dir="../image-matching-challenge-2023/",
         output_dir="./output",
         dataset=dataset,
         scene=scene,
