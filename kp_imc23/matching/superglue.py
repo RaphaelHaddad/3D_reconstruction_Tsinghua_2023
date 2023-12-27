@@ -75,6 +75,8 @@ def extract_features(model, inp0,inp1):
 
     return mkpts0, mkpts1, conf,valid, matches, kpts0, kpts1
 
+
+
 def extract_features_split_matching(model, image0,image1):
     # Split the images into regions using the specified method
     tiles1, tiles2, offsets = split_images_into_regions(image0, image1)
