@@ -4,7 +4,9 @@ import argparse
 import os
 from .save_matches_keypoints import keypoints_to_out_match_unique_kpts, register_keypoints, register_matches, import_into_colmap, create_submission
 from .colmap import COLMAP_mapping, COLMAP_result_analysis
-import pycolmap
+try :
+    import pycolmap
+except : pass
 
 
 def database_colmap_run(

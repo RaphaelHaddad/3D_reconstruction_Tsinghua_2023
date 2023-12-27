@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Tuple
 from kp_imc23.config.paths import DataPaths
 import gdown
 import os
+import wget
 
 from kp_imc23.preprocessing.main import preprocess
 from kp_imc23.matching.main import database_colmap_run
@@ -21,7 +22,7 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
         gdown.download("https://drive.google.com/u/0/uc?id=1sdmPmaDhivdHPfn9M9vAkTbiprbPq94e&export=download", diodModelPath, quiet=False)
 
     # download weights of superglue
-    superGlueWeights = ["superglue_indoor.pth", "superglue_outdoor.pth", "superglue_v1.pth"]
+    superGlueWeights = ["superglue_indoor.pth", "superglue_outdoor.pth", "superpoint_v1.pth"]
     ids = ["1cGa3BG_6guARq37cpkxGt5-w2ZRlh5yn",
         "1gpO6DO4ddJtLh5LdYDvP8uJAM4LYaw-I",
         "1wcAzAhwwn47JG0iXYewdbXq0SHPSTA-Z"
@@ -39,7 +40,6 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
         path = f"./weights/outdoor_ds.ckpt"
         print(f"Downloading weights {path}...")
         gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
-    
 
     paths = DataPaths(Path(data_dir), Path(output_dir), dataset, scene, mode)
     return paths
@@ -54,9 +54,10 @@ def main():
     )
 
     # preprocess images
-    keypoints = preprocess(paths,args=None)
-    
-    database_colmap_run(paths, dataset, scene, keypoints, args=None)
+    keypoints, image_dir_used = preprocess(paths,args=None)
+
+    # Database
+    database_colmap_run(paths, image_dir_used, dataset, scene, keypoints, args=None)
 
 if __name__ == '__main__':
     main()

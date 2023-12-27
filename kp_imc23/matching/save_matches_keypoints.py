@@ -6,6 +6,7 @@ from copy import deepcopy
 from fastprogress import progress_bar
 import os, gc
 from .colmap import COLMAPDatabase, add_keypoints, add_matches
+from pathlib import Path
 
 
 def keypoints_to_out_match_unique_kpts(keypoints, matches_path):
@@ -119,3 +120,29 @@ def import_into_colmap(database_path, keypoint_path, image_dir_used, matches_pat
 
     db.commit()
     return
+
+
+def arr_to_str(arr):
+    return ','.join(map(str, arr))
+
+
+
+# Function to create a submission file.
+def create_submission(out_results, image_list, csv_path, dataset, scene):
+    # Check if the CSV file already exists
+    file_exists = Path(csv_path).exists()
+
+    # Open the CSV file in append mode
+    with open(csv_path, 'a') as f:
+        # If the file doesn't exist, write the header
+        if not file_exists:
+            f.write('image_path,dataset,scene,rotation_matrix,translation_vector\n')
+
+        for image in image_list:
+            if image in out_results[dataset][scene]:
+                R = out_results[dataset][scene][image]['R'].reshape(-1)
+                T = out_results[dataset][scene]['t'].reshape(-1)
+            else:
+                R = np.eye(3).reshape(-1)
+                T = np.zeros((3))
+            f.write(f'{image},{dataset},{scene},{arr_to_str(R)},{arr_to_str(T)}\n')

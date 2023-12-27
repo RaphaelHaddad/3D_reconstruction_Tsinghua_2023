@@ -1,5 +1,6 @@
 import pickle
 import numpy as np
+import torch, platform
 
 
 def concat_keypoints(keypoints1_pickle,keypoints2_pickle):
@@ -92,3 +93,20 @@ def split_images_into_regions(img1, img2):
     offsets.append((w2, h2))
 
     return tiles_img1, tiles_img2, offsets
+
+
+def set_torch_device():
+    # Get the current operating system
+    operating_system = platform.system()
+
+    # Set the PyTorch device based on the operating system
+    if operating_system == "Windows":
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    elif operating_system == "Linux":
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    elif operating_system == "Darwin":  # macOS
+        device = torch.device("cpu")
+    else:
+        device = torch.device("cpu")  # Default to CPU if the OS is not recognized
+
+    return device

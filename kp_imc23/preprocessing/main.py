@@ -31,8 +31,9 @@ def preprocess(
     # rotate images
     rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
-    # # compute pairs 
-    compute_pairs(paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path)
+    # compute pairs 
+    image_dir_used = paths.rotated_image_dir
+    compute_pairs(image_dir_used, image_list, paths.features_retrieval, paths.pairs_path)
 
     # # TODO: run in parallel
     # # extract important keypoints 
@@ -43,9 +44,10 @@ def preprocess(
     keypoints = concat_keypoints(paths.superglue_keypoints_pickle,paths.loftr_keypoints_pickle)
 
     # crop images 
-    crop_images(paths.rotated_image_dir, paths.pairs_path, paths.cropped_image_dir,sg_keypoints)
+    chosen_dir_image = paths.input_dir_images
+    crop_images(chosen_dir_image, paths.pairs_path, paths.cropped_image_dir,sg_keypoints)
 
     # build superlist
     superlist = build_superlist(keypoints)
 
-    return keypoints, superlist
+    return keypoints, image_dir_used
