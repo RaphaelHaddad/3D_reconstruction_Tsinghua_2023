@@ -43,7 +43,8 @@ def preprocess(
     keypoints = concat_keypoints(paths.superglue_keypoints_pickle,paths.loftr_keypoints_pickle)
 
     # crop images 
-    crop_images(paths.rotated_image_dir, paths.pairs_path, paths.cropped_image_dir,keypoints)
+    chosen_dir_image = paths.input_dir_images
+    crop_images(chosen_dir_image, paths.pairs_path, paths.cropped_image_dir,keypoints)
 
     # build superlist
     superlist = build_superlist(keypoints)
