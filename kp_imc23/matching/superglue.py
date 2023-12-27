@@ -6,6 +6,7 @@ from kp_imc23.preprocessing.pairs import get_pairs
 from kp_imc23.external.superglue.models.matching import Matching
 from kp_imc23.external.superglue.models.utils import read_image, get_torch_device
 
+
 def extract_features_superglue(matching, config, inp0,inp1,device):
     # Perform the matching.
     pred = matching({'image0': inp0, 'image1': inp1})
