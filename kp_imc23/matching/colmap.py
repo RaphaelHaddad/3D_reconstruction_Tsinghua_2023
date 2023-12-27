@@ -196,7 +196,7 @@ def add_keypoints(db, keypoint_path, image_path, camera_model, single_camera = T
 
     camera_id = None
     fname_to_id = {}
-    for filename in tqdm(list(keypoint_f.keys())):
+    for filename in list(keypoint_f.keys()):
         keypoints = keypoint_f[filename][()]
 
         fname_with_ext = filename# + img_ext
@@ -273,28 +273,27 @@ def get_focal(image_path, err_on_default=False):
 
 def add_matches(db, matches_path, fname_to_id):
 
+    matches_final = h5py.File(matches_path, 'r')
     added = set()
-    n_keys = len(matches_path.keys())
+    n_keys = len(matches_final.keys())
     n_total = (n_keys * (n_keys - 1)) // 2
 
-    with tqdm(total=n_total) as pbar:
-        for key_1 in matches_path.keys():
-            group = matches_path[key_1]
-            for key_2 in group.keys():
-                id_1 = fname_to_id[key_1]
-                id_2 = fname_to_id[key_2]
+    for key_1 in matches_final.keys():
+        group = matches_final[key_1]
+        for key_2 in group.keys():
+            id_1 = fname_to_id[key_1]
+            id_2 = fname_to_id[key_2]
 
-                pair_id = image_ids_to_pair_id(id_1, id_2)
-                if pair_id in added:
-                    warnings.warn(f'Pair {pair_id} ({id_1}, {id_2}) already added!')
-                    continue
+            pair_id = image_ids_to_pair_id(id_1, id_2)
+            if pair_id in added:
+                warnings.warn(f'Pair {pair_id} ({id_1}, {id_2}) already added!')
+                continue
 
-                matches = group[key_2][()]
-                db.add_matches(id_1, id_2, matches)
+            matches = group[key_2][()]
+            db.add_matches(id_1, id_2, matches)
 
-                added.add(pair_id)
+            added.add(pair_id)
 
-                pbar.update(1)
 
 
 
