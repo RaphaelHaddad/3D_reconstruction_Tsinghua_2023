@@ -45,6 +45,7 @@ def crop_images(images_dir: Path,pairs_path,output_dir,keypoints,resize = [1376,
 
     for image_0_name,image_1_name in tqdm(pairs, desc=f"Cropping {images_dir.name}", ncols=80):
         img0_path = images_dir / image_0_name
+        print(img0_path)
         
         img1_path = images_dir / image_1_name
 
