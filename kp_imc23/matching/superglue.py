@@ -4,7 +4,7 @@ from tqdm import tqdm
 from pathlib import Path
 from kp_imc23.preprocessing.pairs import get_pairs
 from kp_imc23.external.superglue.models.matching import Matching
-from kp_imc23.external.superglue.models.utils import read_image
+from kp_imc23.external.superglue.models.utils import read_image, get_torch_device
 
 def extract_features_superglue(matching, config, inp0,inp1,device):
     # Perform the matching.
@@ -31,7 +31,7 @@ def scale_to_resized(mkpts0, mkpts1, scale1,scale2):
     return mkpts0, mkpts1
 
 def superglue(images_dir: Path,pairs_path,output_dir, resize = [1376,]):
-    device =  'cpu'
+    device = get_torch_device()
     # device = torch.device('cuda')
     # resize = [[840,], [1024,], [1280,] ]
 

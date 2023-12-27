@@ -2,6 +2,7 @@ import pickle
 import numpy as np
 from tqdm import tqdm
 from pathlib import Path
+
 from kp_imc23.preprocessing.pairs import get_pairs
 from kp_imc23.external.superglue.models.matching import Matching
 from kp_imc23.external.superglue.models.utils import read_image
@@ -34,7 +35,7 @@ def scale_to_resized(mkpts0, mkpts1, scale1,scale2):
     return mkpts0, mkpts1
 
 def loftr(images_dir: Path,pairs_path,weights_path,output_dir,resize = [1376,]):
-    device =  'cpu'
+    device =  get_torch_device()
     # device = torch.device('cuda')
     # resize = [[840,], [1024,], [1280,] ]
 

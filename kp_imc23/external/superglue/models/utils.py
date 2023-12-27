@@ -51,7 +51,9 @@ import cv2
 import torch
 import matplotlib.pyplot as plt
 import matplotlib
+import platform
 matplotlib.use('Agg')
+
 
 
 class AverageTimer:
@@ -553,3 +555,17 @@ def make_matching_plot_fast(image0, image1, kpts0, kpts1, mkpts0,
 def error_colormap(x):
     return np.clip(
         np.stack([2-x*2, x*2, np.zeros_like(x), np.ones_like(x)], -1), 0, 1)
+
+def get_torch_device():
+    system = platform.system()
+
+    if system == "Darwin":  # MacOS
+        return torch.device("mps")
+    elif system == "Linux" or system == "Windows":
+        if torch.cuda.is_available():
+            return torch.device("cuda")
+        else:
+            return torch.device("cpu")
+    else:
+        # Handle other operating systems as needed
+        return torch.device("cpu")
