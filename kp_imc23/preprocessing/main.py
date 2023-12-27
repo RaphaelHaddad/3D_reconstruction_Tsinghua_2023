@@ -28,24 +28,24 @@ def preprocess(
 
     image_list = os.listdir(paths.input_dir_images)
 
-    # rotate images
-    rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
+    # # rotate images
+    # rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
-    # compute pairs 
+    # # compute pairs 
     image_dir_used = paths.rotated_image_dir
-    compute_pairs(image_dir_used, image_list, paths.features_retrieval, paths.pairs_path)
+    # compute_pairs(image_dir_used, image_list, paths.features_retrieval, paths.pairs_path)
 
-    # # TODO: run in parallel
-    # # extract important keypoints 
-    sg_keypoints = superglue(paths.rotated_image_dir,paths.pairs_path, paths.superglue_keypoints_pickle)
-    loftr(paths.rotated_image_dir,paths.pairs_path ,paths.loftr_model_weights, paths.loftr_keypoints_pickle)
+    # # # TODO: run in parallel
+    # # # extract important keypoints 
+    # sg_keypoints = superglue(paths.rotated_image_dir,paths.pairs_path, paths.superglue_keypoints_pickle)
+    # loftr(paths.rotated_image_dir,paths.pairs_path ,paths.loftr_model_weights, paths.loftr_keypoints_pickle)
     
     # concat important keypoints
     keypoints = concat_keypoints(paths.superglue_keypoints_pickle,paths.loftr_keypoints_pickle)
 
     # crop images 
     chosen_dir_image = paths.input_dir_images
-    crop_images(chosen_dir_image, paths.pairs_path, paths.cropped_image_dir,sg_keypoints)
+    # crop_images(chosen_dir_image, paths.pairs_path, paths.cropped_image_dir,sg_keypoints)
 
     # build superlist
     superlist = build_superlist(keypoints)
