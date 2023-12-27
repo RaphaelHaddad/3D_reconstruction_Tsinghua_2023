@@ -5,12 +5,12 @@ import pickle
 from typing import Any, Dict, Tuple
 
 import numpy as np
-from src.config.paths import DataPaths
+from kp_imc2023.config.paths import DataPaths
 from .rotate import rotate_images 
 from .pairs import compute_pairs 
 from .crop import crop_images 
-from src.matching.loftr import loftr
-from src.matching.superglue import superglue
+from kp_imc2023.matching.loftr import loftr
+from kp_imc2023.matching.superglue import superglue
 
 def concat_keypoints(keypoints1_pickle,keypoints2_pickle):
     keypoints1 = None

@@ -6,7 +6,7 @@ import torch
 from tqdm import tqdm
 from pathlib import Path
 
-from src.external.superglue.models.utils import read_image
+from kp_imc2023.external.superglue.models.utils import read_image
 from .pairs import get_pairs
 from sklearn.cluster import DBSCAN
 

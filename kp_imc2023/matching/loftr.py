@@ -2,9 +2,12 @@ import pickle
 import numpy as np
 from tqdm import tqdm
 from pathlib import Path
-from src.preprocessing.pairs import get_pairs
-from src.external.superglue.models.matching import Matching
-from src.external.superglue.models.utils import read_image
+from kp_imc2023.preprocessing.pairs import get_pairs
+from kp_imc2023.external.superglue.models.matching import Matching
+from kp_imc2023.external.superglue.models.utils import read_image
+import torch
+import kornia as K
+import kornia.feature as KF
 
 def extract_features_superglue(matching, config, inp0,inp1,device):
     # Perform the matching.
@@ -30,30 +33,21 @@ def scale_to_resized(mkpts0, mkpts1, scale1,scale2):
     
     return mkpts0, mkpts1
 
-def superglue(images_dir: Path,pairs_path,output_dir, resize = [1376,]):
+def loftr(images_dir: Path,pairs_path,weights_path,output_dir,resize = [1376,]):
     device =  'cpu'
     # device = torch.device('cuda')
     # resize = [[840,], [1024,], [1280,] ]
 
     pairs = get_pairs(pairs_path)
 
-    config = {
-        "superpoint": {
-            "nms_radius": 4,
-            "keypoint_threshold": 0.005,
-            "max_keypoints": 1024
-        },
-        "superglue": {
-            "weights": "outdoor",
-            "sinkhorn_iterations": 20,
-            "match_threshold": 0.2,
-        },
-    }
-      
-    matching = Matching(config).eval().to(device)
+    matcher = KF.LoFTR(pretrained=None)
+    matcher.load_state_dict(torch.load(weights_path)['state_dict'])
+    matcher = matcher.to(device).eval()
+
     keypoints = {}
 
-    for image_0_name,image_1_name in tqdm(pairs, desc=f"Superglue {images_dir.name}", ncols=80):
+    for image_0_name,image_1_name in tqdm(pairs, desc=f"Loftr {images_dir.name}", ncols=80):
+        
         img0_path = images_dir / image_0_name
         
         img1_path = images_dir / image_1_name
@@ -66,7 +60,15 @@ def superglue(images_dir: Path,pairs_path,output_dir, resize = [1376,]):
         image0, inp0, scales0 = read_image(img0_path,device,resize,0,True)
         image1, inp1, scales1 = read_image(img1_path,device,resize,0,True)
 
-        mkpts0, mkpts1, conf, valid, matches = extract_features_superglue(matching, config,inp0,inp1,device)
+        with torch.inference_mode():
+            input_dict = {"image0": inp0,"image1": inp1}
+            correspondences = matcher(input_dict)
+
+        mkpts0 = correspondences['keypoints0'].cpu().numpy()
+        mkpts1 = correspondences['keypoints1'].cpu().numpy()
+        
+        # mkpts0, mkpts1 = scale_to_resized(mkpts0,mkpts1,scales0,scales1)
+
         
         keypoints[image_0_name][image_1_name] = {"keypoints0":mkpts0,"keypoints1":mkpts1}
 

@@ -1,11 +1,11 @@
 import argparse
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
-from src.config.paths import DataPaths
+from kp_imc2023.config.paths import DataPaths
 import gdown
 import os
 
-from src.preprocessing.main import preprocess
+from kp_imc2023.preprocessing.main import preprocess
 
 def configurate(data_dir, output_dir, dataset, scene, mode):
     """Configurate paths for the computation results.

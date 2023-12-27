@@ -1,5 +1,5 @@
 
-from src.external.hloc import (
+from kp_imc2023.external.hloc import (
     extract_features,
     pairs_from_retrieval,
     
