@@ -138,21 +138,11 @@ def create_submission(out_results, image_list, csv_path, dataset, scene):
         if not file_exists:
             f.write('image_path,dataset,scene,rotation_matrix,translation_vector\n')
 
-        for dataset in image_list:
-            if dataset in out_results:
-                res = out_results[dataset]
+        for image in image_list:
+            if image in out_results[dataset][scene]:
+                R = out_results[dataset][scene][image]['R'].reshape(-1)
+                T = out_results[dataset][scene]['t'].reshape(-1)
             else:
-                res = {}
-            for scene in data_dict[dataset]:
-                if scene in res:
-                    scene_res = res[scene]
-                else:
-                    scene_res = {"R": {}, "t": {}}
-                for image in data_dict[dataset][scene]:
-                    if image in scene_res:
-                        R = scene_res[image]['R'].reshape(-1)
-                        T = scene_res[image]['t'].reshape(-1)
-                    else:
-                        R = np.eye(3).reshape(-1)
-                        T = np.zeros((3))
-                    f.write(f'{image},{dataset},{scene},{arr_to_str(R)},{arr_to_str(T)}\n')
+                R = np.eye(3).reshape(-1)
+                T = np.zeros((3))
+            f.write(f'{image},{dataset},{scene},{arr_to_str(R)},{arr_to_str(T)}\n')
