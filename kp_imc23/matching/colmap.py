@@ -3,7 +3,9 @@ import numpy as np
 import os, sys, warnings
 import h5py
 import tqdm
-# import pycolmap
+try :
+    import pycolmap
+except : pass
 from PIL import Image, ExifTags
 from copy import deepcopy
 

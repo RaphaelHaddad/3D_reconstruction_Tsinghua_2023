@@ -6,7 +6,7 @@ from pathlib import Path
 from kp_imc23.preprocessing.pairs import get_pairs
 from kp_imc23.external.superglue.models.matching import Matching
 from kp_imc23.external.superglue.models.utils import frame2tensor, make_matching_plot, read_image, get_torch_device
-from kp_imc23.preprocessing.utils import split_images_into_regions
+from kp_imc23.preprocessing.utils import split_images_into_regions, set_torch_device
 
 
 def get_model(device):
@@ -120,7 +120,7 @@ def extract_features_split_matching(model, image0,image1):
 
 
 def superglue(images_dir: Path,pairs_path,output_dir, resize = [1376,],with_splitting = False):
-    device =  'cpu'
+    device = set_torch_device()
     # device = torch.device('cuda')
     # resize = [[840,], [1024,], [1280,] ]
 
