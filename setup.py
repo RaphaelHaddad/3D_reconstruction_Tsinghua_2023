@@ -16,7 +16,7 @@ setup(
   name = 'kp_imc23',         # How you named your package folder (MyLib)
   packages=find_packages(exclude=['*.pth']),
   package_data={'': extra_files},
-  version = '0.11',      # Start with a small number and increase it with every change you make
+  version = '0.13',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'Package for the Image Matching Challenge 2023',   # Give a short description about your library
   author = 'Kevin Pruvost \ Raphael El Haddad \ Borislav Pavlov',                   # Type in your name
