@@ -4,6 +4,7 @@ outputs/**
 weights/**
 
 # Byte-compiled / optimized / DLL files
+*/**/__pycache__/
 __pycache__/
 *.py[cod]
 *$py.class
@@ -12,3 +13,5 @@ train/
 test/
 weights/
 output/
+
+*.tar.gz
