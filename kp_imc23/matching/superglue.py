@@ -152,3 +152,5 @@ def superglue(images_dir: Path,pairs_path,output_dir, resize = [1376,],with_spli
 
     with open(output_dir, "wb") as file:
         pickle.dump(keypoints, file)
+
+    return keypoints
