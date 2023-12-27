@@ -2,8 +2,8 @@ from typing import Any, Dict, Tuple
 from kp_imc23.config.paths import DataPaths
 import argparse
 import os
-from .save_matches_keypoints import keypoints_to_out_match_unique_kpts, register_keypoints, register_matches, import_into_colmap, \
-    COLMAP_mapping, COLMAP_result_analysis
+from .save_matches_keypoints import keypoints_to_out_match_unique_kpts, register_keypoints, register_matches, import_into_colmap
+from .colmap import COLMAP_mapping, COLMAP_result_analysis
 import pycolmap
 
 
@@ -22,16 +22,17 @@ def database_colmap_run(
     """
 
 
-    # Keypoints into unique keypoints and list of matches
-    out_match, unique_kpts = keypoints_to_out_match_unique_kpts(keypoints, paths.matches_path)
+    # # Keypoints into unique keypoints and list of matches
+    # out_match, unique_kpts = keypoints_to_out_match_unique_kpts(keypoints, paths.matches_path)
 
-    # Save keypoints and matches into database
-    register_keypoints(paths.keypoints_path, unique_kpts)
-    register_matches(paths.matches_final_path, out_match, unique_kpts)
+    # # Save keypoints and matches into database
 
-    # Import into database COLMAP
-    image_dir_used = paths.rotated_image_dir
-    import_into_colmap(paths.database_path, paths.keypoints_final_path, image_dir_used, paths.matches_final_path)
+    # register_keypoints(paths.keypoints_final_path, unique_kpts)
+    # register_matches(paths.matches_final_path, out_match)
+
+    # # Import into database COLMAP
+    image_dir_used = paths.input_dir_images
+    # import_into_colmap(paths.database_path, paths.keypoints_final_path, image_dir_used, paths.matches_final_path)
 
     # Match exhaustif of pycolmap for formatting
     pycolmap.match_exhaustive(paths.database_path)

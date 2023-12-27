@@ -12,6 +12,5 @@ __pycache__/
 train/
 test/
 weights/
-output/
 
 *.tar.gz
