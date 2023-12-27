@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Tuple
 from kp_imc23.config.paths import DataPaths
 import gdown
 import os
+import wget
 
 from kp_imc23.preprocessing.main import preprocess
 from kp_imc23.matching.main import database_colmap_run
@@ -39,6 +40,13 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
         path = f"./weights/outdoor_ds.ckpt"
         print(f"Downloading weights {path}...")
         gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
+
+    # download weights of superpoint
+    url = "https://github.com/magicleap/SuperPointPretrainedNetwork/blob/master/superpoint_v1.pth"
+    path = "./weights/superpoint_v1.pth"
+    if not os.path.exists(path):
+            print(f"Downloading weights Superpoint...")
+            wget.download(url, out=path)
     
 
     paths = DataPaths(Path(data_dir), Path(output_dir), dataset, scene, mode)

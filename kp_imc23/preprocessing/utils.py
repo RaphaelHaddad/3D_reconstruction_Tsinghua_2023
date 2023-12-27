@@ -105,7 +105,7 @@ def set_torch_device():
     elif operating_system == "Linux":
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     elif operating_system == "Darwin":  # macOS
-        device = torch.device("mps")
+        device = torch.device("cpu")
     else:
         device = torch.device("cpu")  # Default to CPU if the OS is not recognized
 

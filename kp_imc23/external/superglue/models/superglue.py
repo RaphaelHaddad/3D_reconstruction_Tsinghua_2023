@@ -46,7 +46,6 @@ from typing import List, Tuple
 
 import torch
 from torch import nn
-import wget, os
 
 
 def MLP(channels: List[int], do_bn: bool = True) -> nn.Module:
@@ -222,6 +221,7 @@ class SuperGlue(nn.Module):
         self.register_parameter('bin_score', bin_score)
 
         assert self.config['weights'] in ['indoor', 'outdoor']
+        path = Path(__file__).parent
         path = './weights/superglue_{}.pth'.format(self.config['weights'])
         self.load_state_dict(torch.load(str(path)))
         print('Loaded SuperGlue model (\"{}\" weights)'.format(

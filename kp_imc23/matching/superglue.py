@@ -141,7 +141,6 @@ def superglue(images_dir: Path,pairs_path,output_dir, resize = [1376,],with_spli
         image0, inp0, scales0 = read_image(img0_path,device,resize,0,True)
         image1, inp1, scales1 = read_image(img1_path,device,resize,0,True)
 
-        mkpts0, mkpts1 = {}
 
         if(with_splitting):
             mkpts0, mkpts1 = extract_features_split_matching(img0_path,img1_path)
