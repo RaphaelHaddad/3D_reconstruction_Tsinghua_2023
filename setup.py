@@ -1,8 +1,21 @@
 from distutils.core import setup
+import os
+
+def package_files(directory):
+    paths = []
+    for (path, directories, filenames) in os.walk(directory):
+        for filename in filenames:
+            if "__pycache__" not in path and not filename.endswith(".txt") and not filename.endswith(".pth"):
+                paths.append(os.path.join('..', path, filename))
+    return paths
+
+extra_files = package_files('./kp_imc23')
+
 setup(
   name = 'kp_imc23',         # How you named your package folder (MyLib)
   packages = ['kp_imc23'],   # Chose the same as "name"
-  version = '0.1',      # Start with a small number and increase it with every change you make
+  package_data={'': extra_files},
+  version = '0.11',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'Package for the Image Matching Challenge 2023',   # Give a short description about your library
   author = 'Kevin Pruvost \ Raphael El Haddad \ Borislav Pavlov',                   # Type in your name
