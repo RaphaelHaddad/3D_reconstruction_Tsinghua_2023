@@ -22,7 +22,7 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
         gdown.download("https://drive.google.com/u/0/uc?id=1sdmPmaDhivdHPfn9M9vAkTbiprbPq94e&export=download", diodModelPath, quiet=False)
 
     # download weights of superglue
-    superGlueWeights = ["superglue_indoor.pth", "superglue_outdoor.pth", "superglue_v1.pth"]
+    superGlueWeights = ["superglue_indoor.pth", "superglue_outdoor.pth", "superpoint_v1.pth"]
     ids = ["1cGa3BG_6guARq37cpkxGt5-w2ZRlh5yn",
         "1gpO6DO4ddJtLh5LdYDvP8uJAM4LYaw-I",
         "1wcAzAhwwn47JG0iXYewdbXq0SHPSTA-Z"
@@ -41,12 +41,6 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
         print(f"Downloading weights {path}...")
         gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
 
-    # download weights of superpoint
-    url = "https://github.com/magicleap/SuperPointPretrainedNetwork/blob/master/superpoint_v1.pth"
-    path = "./weights/superpoint_v1.pth"
-    if not os.path.exists(path):
-            print(f"Downloading weights Superpoint...")
-            wget.download(url, out=path)
     
 
     paths = DataPaths(Path(data_dir), Path(output_dir), dataset, scene, mode)

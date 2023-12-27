@@ -143,9 +143,9 @@ def superglue(images_dir: Path,pairs_path,output_dir, resize = [1376,],with_spli
 
 
         if(with_splitting):
-            mkpts0, mkpts1 = extract_features_split_matching(img0_path,img1_path)
+            mkpts0, mkpts1, _,_, _, _, _ = extract_features_split_matching(img0_path,img1_path)
         else:
-            mkpts0, mkpts1 = extract_features(model,inp0,inp1)
+            mkpts0, mkpts1, _,_, _, _, _ = extract_features(model,inp0,inp1)
         
         keypoints[image_0_name][image_1_name] = {"keypoints0":mkpts0,"keypoints1":mkpts1}
 
