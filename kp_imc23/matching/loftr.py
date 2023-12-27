@@ -122,9 +122,9 @@ def loftr(images_dir: Path,pairs_path,weights_path,output_dir,resize = [1376,], 
         image1, inp1, scales1 = read_image(img1_path,device,resize,0,True)
     
         if(with_splitting):
-            mkpts0, mkpts1 = loft_split_matching(model,image0,image1)
+            mkpts0, mkpts1, conf = loft_split_matching(model,image0,image1)
         else:
-            mkpts0, mkpts1 = extract_features(model,inp0,inp1)
+            mkpts0, mkpts1, conf = extract_features(model,inp0,inp1)
         # mkpts0, mkpts1 = scale_to_resized(mkpts0,mkpts1,scales0,scales1)
 
         keypoints[image_0_name][image_1_name] = {"keypoints0":mkpts0,"keypoints1":mkpts1}
