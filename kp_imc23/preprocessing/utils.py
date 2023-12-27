@@ -56,3 +56,39 @@ def build_superlist(keypoints):
         latest_super_pair = next_super_pair
 
     return superlist
+
+
+def split_images_into_regions(img1, img2):
+    min_h = min(img1.shape[0], img2.shape[0])
+    min_w = min(img1.shape[1], img2.shape[1])
+
+    # Create empty lists for tiles from both images and their offsets
+    tiles_img1 = []
+    tiles_img2 = []
+    offsets = []
+
+    # Split each image into four parts
+    w2 = min_w // 2
+    h2 = min_h // 2
+
+    # Top-left region
+    tiles_img1.append(img1[:h2, :w2])
+    tiles_img2.append(img2[:h2, :w2])
+    offsets.append((0, 0))
+
+    # Top-right region
+    tiles_img1.append(img1[:h2, w2:])
+    tiles_img2.append(img2[:h2, w2:])
+    offsets.append((w2, 0))
+
+    # Bottom-left region
+    tiles_img1.append(img1[h2:, :w2])
+    tiles_img2.append(img2[h2:, :w2])
+    offsets.append((0, h2))
+
+    # Bottom-right region
+    tiles_img1.append(img1[h2:, w2:])
+    tiles_img2.append(img2[h2:, w2:])
+    offsets.append((w2, h2))
+
+    return tiles_img1, tiles_img2, offsets
