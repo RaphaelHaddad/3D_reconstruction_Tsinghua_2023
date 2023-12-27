@@ -12,11 +12,34 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
     """Configurate paths for the computation results.
     Also downloads weights if they are not here.
     """
-    # download weights
+    # download weights of dioad
     diodModelPath = "./weights/model-vit-ang-loss.h5"
+    if not os.path.exists("./weights/"):
+        os.makedirs("./weights/")
     if not os.path.exists(diodModelPath):
         print("Downloading weights...")
         gdown.download("https://drive.google.com/u/0/uc?id=1sdmPmaDhivdHPfn9M9vAkTbiprbPq94e&export=download", diodModelPath, quiet=False)
+
+    # download weights of superglue
+    superGlueWeights = ["superglue_indoor.pth", "superglue_outdoor.pth", "superglue_v1.pth"]
+    ids = ["1cGa3BG_6guARq37cpkxGt5-w2ZRlh5yn",
+        "1gpO6DO4ddJtLh5LdYDvP8uJAM4LYaw-I",
+        "1wcAzAhwwn47JG0iXYewdbXq0SHPSTA-Z"
+    ]
+
+    for file, id in zip(superGlueWeights, ids):
+        path = f"./weights/{file}"
+        if not os.path.exists(path):
+            print(f"Downloading weights {file}...")
+            gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
+
+    # download weights of loftr
+    if not os.path.exists(path):
+        id = "1M-VD35-qdB5Iw-AtbDBCKC7hPolFW9UY"
+        path = f"./weights/outdoor_ds.ckpt"
+        print(f"Downloading weights {path}...")
+        gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
+    
 
     paths = DataPaths(Path(data_dir), Path(output_dir), dataset, scene, mode)
     return paths

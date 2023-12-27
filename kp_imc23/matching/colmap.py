@@ -3,7 +3,7 @@ import numpy as np
 import os, sys, warnings
 import h5py
 import tqdm
-import pycolmap
+# import pycolmap
 from PIL import Image, ExifTags
 from copy import deepcopy
 

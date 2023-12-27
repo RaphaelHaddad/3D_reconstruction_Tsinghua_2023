@@ -33,7 +33,7 @@ def preprocess(
 
     # compute pairs 
     image_dir_used = paths.rotated_image_dir
-    compute_pairs(image_list, paths.features_retrieval, paths.pairs_path)
+    compute_pairs(image_dir_used, image_list, paths.features_retrieval, paths.pairs_path)
 
     # # TODO: run in parallel
     # # extract important keypoints 
