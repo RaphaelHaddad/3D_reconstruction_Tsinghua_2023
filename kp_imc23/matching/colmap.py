@@ -304,8 +304,8 @@ def COLMAP_mapping(colmap_output, database_path, image_dir_used):
     mapper_options = pycolmap.IncrementalMapperOptions()
     mapper_options.min_model_size = 2
     mapper_options.min_num_matches = 1
-    mapper_options.ba_local_max_num_iterations = 1
-    mapper_options.ba_global_max_num_iterations = 1
+    mapper_options.ba_local_max_num_iterations = 500
+    mapper_options.ba_global_max_num_iterations = 500
     os.makedirs(colmap_output, exist_ok=True)
 
     maps = pycolmap.incremental_mapping(database_path=str(database_path), image_path=str(image_dir_used),\
@@ -315,7 +315,7 @@ def COLMAP_mapping(colmap_output, database_path, image_dir_used):
 
 def COLMAP_result_analysis(maps, dataset, scene) :
     print ("Looking for the best reconstruction")
-    out_results = {}
+    out_results = {dataset:{scene:{}}}
     imgs_registered  = 0
     best_idx = None
     print ("Looking for the best reconstruction")
@@ -327,12 +327,12 @@ def COLMAP_result_analysis(maps, dataset, scene) :
                 imgs_registered = len(rec.images)
                 best_idx = idx1
     if best_idx is not None:
-                print (maps[best_idx].summary())
-                for k, im in maps[best_idx].images.items():
-                    key1 = f'{dataset}/{scene}/images/{im.name}'
-                    out_results[dataset][scene][key1] = {}
-                    out_results[dataset][scene][key1]["R"] = deepcopy(im.rotmat())
-                    out_results[dataset][scene][key1]["t"] = deepcopy(np.array(im.tvec))
+        print (maps[best_idx].summary())
+        for k, im in maps[best_idx].images.items():
+            key1 = f'{dataset}/{scene}/images/{im.name}'
+            out_results[dataset][scene][key1] = {}
+            out_results[dataset][scene][key1]["R"] = deepcopy(im.rotmat())
+            out_results[dataset][scene][key1]["t"] = deepcopy(np.array(im.tvec))
     return out_results
 
 
