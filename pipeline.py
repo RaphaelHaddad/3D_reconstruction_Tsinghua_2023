@@ -35,9 +35,9 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
             gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
 
     # download weights of loftr
+    path = f"./weights/outdoor_ds.ckpt"
     if not os.path.exists(path):
         id = "1M-VD35-qdB5Iw-AtbDBCKC7hPolFW9UY"
-        path = f"./weights/outdoor_ds.ckpt"
         print(f"Downloading weights {path}...")
         gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
 
