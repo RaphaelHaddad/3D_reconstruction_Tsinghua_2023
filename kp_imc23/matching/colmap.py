@@ -313,7 +313,7 @@ def COLMAP_mapping(colmap_output, database_path, image_dir_used):
     print(str(colmap_output))
     maps = pycolmap.incremental_mapping(database_path=str(database_path), image_path=str(image_dir_used),\
                                     output_path=str(colmap_output), options=mapper_options)
-    print(maps.summary())
+    print(maps)
     
     return maps
 
