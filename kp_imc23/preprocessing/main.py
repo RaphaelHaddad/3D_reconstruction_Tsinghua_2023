@@ -43,29 +43,27 @@ def preprocess(
     # loftr(paths.rotated_image_dir,paths.pairs_path ,paths.loftr_model_weights, paths.loftr_keypoints_pickle)
     extract_features.main(
             conf= {
-                'output': 'feats-superpoint-n4096-rmax1600',
+                'output': 'feats-disk',
                 'model': {
-                    'name': 'superpoint',
-                    'nms_radius': 3,
-                    'max_keypoints': 4096,
+                    'name': 'disk',
+                    'max_keypoints': 5000,
                 },
                 'preprocessing': {
-                    'grayscale': True,
+                    'grayscale': False,
                     'resize_max': 1600,
-                    'resize_force': True,
                 },
             },
-            image_dir=paths.input_dir_images,
+            image_dir=paths.rotated_image_dir,
             image_list=image_list,
             feature_path=paths.features_path,
         )
     
     match_features.main(
             conf= {
-                'output': 'matches-superpoint-lightglue',
+                'output': 'matches-disk-lightglue',
                 'model': {
                     'name': 'lightglue',
-                    'features': 'superpoint',
+                    'features': 'disk',
                 },
             },
             pairs=paths.pairs_path,
@@ -84,7 +82,7 @@ def preprocess(
     # read images from rotated image dir if rotation wrapper is used
     camera_mode = pycolmap.CameraMode.AUTO
     
-    print(f"Using images from {paths.input_dir_images}")
+    print(f"Using images from {paths.rotated_image_dir}")
     print(f"Using pairs from {paths.pairs_path}")
     print(f"Using features from {paths.features_path}")
     print(f"Using matches from {paths.matches_path}")
@@ -98,7 +96,7 @@ def preprocess(
 
     sparse_model = reconstruction.main(
         sfm_dir=paths.sfm_dir,
-        image_dir=paths.input_dir_images,
+        image_dir=paths.rotated_image_dir,
         image_list=image_list,
         pairs=paths.pairs_path,
         features=paths.features_path,
