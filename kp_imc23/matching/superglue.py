@@ -3,10 +3,10 @@ from matplotlib import cm
 import numpy as np
 from tqdm import tqdm
 from pathlib import Path
-from kp_imc23.preprocessing.pairs import get_pairs
-from kp_imc23.external.superglue.models.matching import Matching
-from kp_imc23.external.superglue.models.utils import frame2tensor, make_matching_plot, read_image, get_torch_device
-from kp_imc23.preprocessing.utils import split_images_into_regions, set_torch_device
+from ...kp_imc23.preprocessing.pairs import get_pairs
+from ...kp_imc23.external.superglue.models.matching import Matching
+from ...kp_imc23.external.superglue.models.utils import frame2tensor, make_matching_plot, read_image, get_torch_device
+from ...kp_imc23.preprocessing.utils import split_images_into_regions, set_torch_device
 
 
 def get_model(device):

@@ -4,14 +4,14 @@ import numpy as np
 from tqdm import tqdm
 from pathlib import Path
 
-from kp_imc23.preprocessing.pairs import get_pairs
-from kp_imc23.external.superglue.models.matching import Matching
-from kp_imc23.external.superglue.models.utils import frame2tensor, make_matching_plot, read_image, get_torch_device
+from ...kp_imc23.preprocessing.pairs import get_pairs
+from ...kp_imc23.external.superglue.models.matching import Matching
+from ...kp_imc23.external.superglue.models.utils import frame2tensor, make_matching_plot, read_image, get_torch_device
 import torch
 import kornia as K
 import kornia.feature as KF
 
-from kp_imc23.preprocessing.utils import split_images_into_regions
+from ...kp_imc23.preprocessing.utils import split_images_into_regions
 
 def make_plot(image0, image1, kpts0, kpts1, mkpts0, mkpts1, conf):
     alpha = 0

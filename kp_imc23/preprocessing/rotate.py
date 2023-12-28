@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import List, Tuple
 
 import cv2
-from kp_imc23.external.dioad.dioad import infer as DioadInfer
+from ...kp_imc23.external.dioad.dioad import infer as DioadInfer
 import numpy as np
 from tqdm import tqdm
 
