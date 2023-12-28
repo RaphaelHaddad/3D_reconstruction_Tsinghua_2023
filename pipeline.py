@@ -21,17 +21,17 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
     #     gdown.download("https://drive.google.com/u/0/uc?id=1sdmPmaDhivdHPfn9M9vAkTbiprbPq94e&export=download", diodModelPath, quiet=False)
 
     # # download weights of superglue
-    # superGlueWeights = ["superglue_indoor.pth", "superglue_outdoor.pth", "superpoint_v1.pth"]
-    # ids = ["1cGa3BG_6guARq37cpkxGt5-w2ZRlh5yn",
-    #     "1gpO6DO4ddJtLh5LdYDvP8uJAM4LYaw-I",
-    #     "1wcAzAhwwn47JG0iXYewdbXq0SHPSTA-Z"
-    # ]
+    superGlueWeights = ["superglue_indoor.pth", "superglue_outdoor.pth", "superpoint_v1.pth"]
+    ids = ["1cGa3BG_6guARq37cpkxGt5-w2ZRlh5yn",
+        "1gpO6DO4ddJtLh5LdYDvP8uJAM4LYaw-I",
+        "1wcAzAhwwn47JG0iXYewdbXq0SHPSTA-Z"
+    ]
 
-    # for file, id in zip(superGlueWeights, ids):
-    #     path = f"./weights/{file}"
-    #     if not os.path.exists(path):
-    #         print(f"Downloading weights {file}...")
-    #         gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
+    for file, id in zip(superGlueWeights, ids):
+        path = f"./weights/{file}"
+        if not os.path.exists(path):
+            print(f"Downloading weights {file}...")
+            gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
 
     # # download weights of loftr
     # path = f"./weights/outdoor_ds.ckpt"

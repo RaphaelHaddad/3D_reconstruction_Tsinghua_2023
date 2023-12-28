@@ -62,11 +62,12 @@ def preprocess(
     
     match_features.main(
             conf= {
-                "output": "matches-loftr",
-                "model": {"name": "loftr", "weights": "outdoor"},
-                "preprocessing": {"grayscale": True, "resize_max": 840, "dfactor": 8},  # 1024,
-                "max_error": 1,  # max error for assigned keypoints (in px)
-                "cell_size": 1,  # size of quantization patch (max 1 kp/patch)
+                'output': 'matches-superglue-it5',
+                'model': {
+                    'name': 'superglue',
+                    'weights': 'outdoor',
+                    'sinkhorn_iterations': 5,
+                },
             },
             image_dir=paths.input_dir_images,
             image_list=image_list,
