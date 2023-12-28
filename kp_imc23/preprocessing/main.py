@@ -62,11 +62,10 @@ def preprocess(
     
     match_features.main(
             conf= {
-                'output': 'matches-superglue',
+                'output': 'matches-superpoint-lightglue',
                 'model': {
-                    'name': 'superglue',
-                    'weights': 'outdoor',
-                    'sinkhorn_iterations': 50,
+                    'name': 'lightglue',
+                    'features': 'superpoint',
                 },
             },
             pairs=paths.pairs_path,
