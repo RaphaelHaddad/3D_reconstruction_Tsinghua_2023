@@ -55,7 +55,7 @@ def preprocess(
                     'resize_force': True,
                 },
             },
-            image_dir=paths.image_dir,
+            image_dir=paths.input_dir_images,
             image_list=image_list,
             feature_path=paths.features_path,
         )
@@ -68,7 +68,7 @@ def preprocess(
                 "max_error": 1,  # max error for assigned keypoints (in px)
                 "cell_size": 1,  # size of quantization patch (max 1 kp/patch)
             },
-            image_dir=paths.image_dir,
+            image_dir=paths.input_dir_images,
             image_list=image_list,
             feature_path=paths.matches_path,
         )
