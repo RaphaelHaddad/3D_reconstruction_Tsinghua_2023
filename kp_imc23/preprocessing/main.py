@@ -37,14 +37,16 @@ def preprocess(
     # # # extract important keypoints 
     extract_features.main(
             conf= {
-                'output': 'feats-disk',
+                'output': 'feats-superpoint-n4096-rmax1600',
                 'model': {
-                    'name': 'disk',
-                    'max_keypoints': 5000,
+                    'name': 'superpoint',
+                    'nms_radius': 4,
+                    'max_keypoints': 4096,
                 },
                 'preprocessing': {
-                    'grayscale': False,
+                    'grayscale': True,
                     'resize_max': 1600,
+                    'resize_force': True,
                 },
             },
             image_dir=paths.rotated_image_dir,
@@ -54,10 +56,10 @@ def preprocess(
     
     match_features.main(
             conf= {
-                'output': 'matches-disk-lightglue',
+                'output': 'matches-superpoint-lightglue',
                 'model': {
                     'name': 'lightglue',
-                    'features': 'disk',
+                    'features': 'superpoint',
                 },
             },
             pairs=paths.pairs_path,
