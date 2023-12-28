@@ -5,7 +5,7 @@ import torch
 from ..utils.base_model import BaseModel
 
 sys.path.append(str(Path(__file__).parent / '../../third_party'))
-from SuperGluePretrainedNetwork.models import superpoint  # noqa E402
+from kp_imc23.external.superglue.models import superpoint  # noqa E402
 
 
 # The original keypoint sampling is incorrect. We patch it here but
