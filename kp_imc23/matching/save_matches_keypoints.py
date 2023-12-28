@@ -129,6 +129,8 @@ def arr_to_str(arr):
 
 # Function to create a submission file.
 def create_submission(out_results, image_list, csv_path, dataset, scene):
+    print(out_results)
+    print(image_list)
     # Check if the CSV file already exists
     file_exists = Path(csv_path).exists()
 
