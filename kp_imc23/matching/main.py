@@ -7,14 +7,12 @@ from .colmap import COLMAP_mapping, COLMAP_result_analysis
 try :
     import pycolmap
 except : pass
-
+from kp_imc23.external.hloc import reconstruction
+import gc
 
 def database_colmap_run(
     paths: DataPaths,
-    image_dir_used : str,
-    dataset: str,
-    scene: str,
-    keypoints : Dict[str,Dict[Dict,Dict]],
+    image_list,
     args: argparse.Namespace
 ) -> Tuple[Dict[str, Any], bool]:
     """Save the data into database and run pycolmap on the database.
@@ -40,13 +38,52 @@ def database_colmap_run(
     # pycolmap.match_exhaustive(paths.database_path)
 
     # Run COLMAP incremental mapping
-    maps = COLMAP_mapping(paths.colmap_output, paths.database_path, image_dir_used)
+    # maps = COLMAP_mapping(paths.colmap_output, paths.database_path, image_dir_used)
 
     # Results analysis
-    out_results = COLMAP_result_analysis(maps, dataset, scene)
+    # out_results = COLMAP_result_analysis(maps, dataset, scene)
 
+    # if paths.sfm_dir.exists() and not overwrite:
+    #     try:
+    #         sparse_model = pycolmap.Reconstruction(paths.sfm_dir)
+    #         print(f"Sparse model already at {paths.sfm_dir}")
+    #         return
+    #     except ValueError:
+    #         sparse_model = None
+
+    # read images from rotated image dir if rotation wrapper is used
+    camera_mode = pycolmap.CameraMode.AUTO
+    
+    print(f"Using images from {paths.rotated_image_dir}")
+    print(f"Using pairs from {paths.pairs_path}")
+    print(f"Using features from {paths.features_path}")
+    print(f"Using matches from {paths.matches_path}")
+    print(f"Using {camera_mode}")
+
+    gc.collect()
+    
+    mapper_options = pycolmap.IncrementalMapperOptions()
+    mapper_options.min_model_size = 6
+    mapper_options.min_num_matches = 10
+
+    sparse_model = reconstruction.main(
+        sfm_dir=paths.sfm_dir,
+        image_dir=paths.rotated_image_dir,
+        image_list=image_list,
+        pairs=paths.pairs_path,
+        features=paths.features_path,
+        matches=paths.matches_path,
+        camera_mode=camera_mode,
+        verbose=False,
+        mapper_options=mapper_options.todict(),
+        # skip_geometric_verification=True,
+    )
+
+    sparse_model.write(paths.sfm_dir)
+
+    gc.collect()
     # Create submission
-    image_list = os.listdir(image_dir_used)
-    create_submission(out_results, image_list, paths.submission_path,dataset,scene)
+    # image_list = os.listdir(image_dir_used)
+    # create_submission(out_results, image_list, paths.submission_path,dataset,scene)
 
     

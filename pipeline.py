@@ -33,17 +33,24 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
             print(f"Downloading weights {file}...")
             gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
 
-    # # download weights of loftr
-    # path = f"./weights/outdoor_ds.ckpt"
-    # if not os.path.exists(path):
-    #     id = "1M-VD35-qdB5Iw-AtbDBCKC7hPolFW9UY"
-    #     print(f"Downloading weights {path}...")
-    #     gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
+    # download weights of loftr
+    path = f"./weights/outdoor_ds.ckpt"
+    if not os.path.exists(path):
+        id = "1M-VD35-qdB5Iw-AtbDBCKC7hPolFW9UY"
+        print(f"Downloading weights {path}...")
+        gdown.download(f"https://drive.google.com/u/0/uc?id={id}&export=download", path, quiet=False)
 
     paths = DataPaths(Path(data_dir), Path(output_dir), dataset, scene, mode)
     return paths
 def main():
     dataset, scene = "heritage", "cyprus"
+    # paths = configurate(
+    #     data_dir=".",
+    #     output_dir="./output",
+    #     dataset=dataset,
+    #     scene=scene,
+    #     mode="train"
+    # )
     paths = configurate(
         data_dir="../input/image-matching-challenge-2023/",
         output_dir="./output",
@@ -52,11 +59,13 @@ def main():
         mode="train"
     )
 
+    image_list = os.listdir(paths.input_dir_images)
+
     # preprocess images
-    keypoints, image_dir_used = preprocess(paths,args=None)
+    preprocess(paths, image_list, args=None)
 
     # Database
-    # database_colmap_run(paths, image_dir_used, dataset, scene, keypoints, args=None)
+    database_colmap_run(paths, image_list, args=None)
 
 if __name__ == '__main__':
     main()
