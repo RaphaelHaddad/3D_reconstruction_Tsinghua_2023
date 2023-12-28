@@ -56,7 +56,7 @@ def main():
     keypoints, image_dir_used = preprocess(paths,args=None)
 
     # Database
-    database_colmap_run(paths, image_dir_used, dataset, scene, keypoints, args=None)
+    # database_colmap_run(paths, image_dir_used, dataset, scene, keypoints, args=None)
 
 if __name__ == '__main__':
     main()

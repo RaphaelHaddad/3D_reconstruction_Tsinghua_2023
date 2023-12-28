@@ -28,6 +28,7 @@ class DataPaths:
         # for preprocessing keypoints
         self.superglue_keypoints_dir = self.output_scene_dir / "superglue" 
         self.loftr_keypoints_dir = self.output_scene_dir / "loftr" 
+        # self.features_path = self.superglue_keypoints_dir / "keypoints.pickle"
         self.superglue_keypoints_pickle = self.superglue_keypoints_dir / "keypoints.pickle"
         self.loftr_keypoints_pickle = self.loftr_keypoints_dir / "keypoints.pickle"
 
@@ -35,6 +36,7 @@ class DataPaths:
         self.rotated_image_dir = self.output_scene_dir / "images_rotated"
         self.rotated_features_path = self.output_scene_dir / "features_rotated.h5"
         
+        self.sfm_dir = self.scene_dir / "sparse"
         # for pairs 
         self.pairs_path = self.output_scene_dir / "pairs.txt"
         self.features_retrieval = self.output_scene_dir / "features_retrieval.h5"
