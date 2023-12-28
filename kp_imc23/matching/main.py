@@ -34,7 +34,7 @@ def database_colmap_run(
     register_matches(paths.matches_final_path, out_match)
 
     # Import into database COLMAP
-    import_into_colmap(paths.database_path, paths.keypoints_final_path, image_dir_used, paths.matches_final_path)
+    # import_into_colmap(paths.database_path, paths.keypoints_final_path, image_dir_used, paths.matches_final_path)
 
     # Match exhaustif of pycolmap for formatting
     pycolmap.match_exhaustive(paths.database_path)
@@ -44,6 +44,7 @@ def database_colmap_run(
 
     # Results analysis
     out_results = COLMAP_result_analysis(maps, dataset, scene)
+    print(out_results)
 
     # Create submission
     image_list = os.listdir(image_dir_used)
