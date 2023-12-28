@@ -69,9 +69,9 @@ def preprocess(
                     'sinkhorn_iterations': 5,
                 },
             },
-            image_dir=paths.input_dir_images,
-            image_list=image_list,
-            feature_path=paths.matches_path,
+            pairs=paths.pairs_path,
+            features=paths.features_path,
+            matches=paths.matches_path,
         )
 
     # if paths.sfm_dir.exists() and not overwrite:
