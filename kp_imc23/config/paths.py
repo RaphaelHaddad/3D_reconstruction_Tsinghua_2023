@@ -36,7 +36,7 @@ class DataPaths:
         self.rotated_image_dir = self.output_scene_dir / "images_rotated"
         self.rotated_features_path = self.output_scene_dir / "features_rotated.h5"
         
-        self.sfm_dir = self.scene_dir / "sparse"
+        self.sfm_dir = self.output_scene_dir / "sparse"
         # for pairs 
         self.pairs_path = self.output_scene_dir / "pairs.txt"
         self.features_retrieval = self.output_scene_dir / "features_retrieval.h5"
