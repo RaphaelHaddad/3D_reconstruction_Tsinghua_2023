@@ -25,19 +25,19 @@ def database_colmap_run(
     """
 
 
-    # Keypoints into unique keypoints and list of matches
-    out_match, unique_kpts = keypoints_to_out_match_unique_kpts(keypoints, paths.matches_path)
+    # # Keypoints into unique keypoints and list of matches
+    # out_match, unique_kpts = keypoints_to_out_match_unique_kpts(keypoints, paths.matches_path)
 
-    # Save keypoints and matches into database
+    # # Save keypoints and matches into database
 
-    register_keypoints(paths.keypoints_final_path, unique_kpts)
-    register_matches(paths.matches_final_path, out_match)
+    # register_keypoints(paths.keypoints_final_path, unique_kpts)
+    # register_matches(paths.matches_final_path, out_match)
 
-    # Import into database COLMAP
-    import_into_colmap(paths.database_path, paths.keypoints_final_path, image_dir_used, paths.matches_final_path)
+    # # Import into database COLMAP
+    # import_into_colmap(paths.database_path, paths.keypoints_final_path, image_dir_used, paths.matches_final_path)
 
-    # Match exhaustif of pycolmap for formatting
-    pycolmap.match_exhaustive(paths.database_path)
+    # # Match exhaustif of pycolmap for formatting
+    # pycolmap.match_exhaustive(paths.database_path)
 
     # Run COLMAP incremental mapping
     maps = COLMAP_mapping(paths.colmap_output, paths.database_path, image_dir_used)
