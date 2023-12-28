@@ -32,7 +32,7 @@ def preprocess(
     # rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
     # # compute pairs 
-    image_dir_used = paths.rotated_image_dir
+    image_dir_used = paths.input_dir_images
     # compute_pairs(image_dir_used, image_list, paths.features_retrieval, paths.pairs_path)
 
     # # # TODO: run in parallel
