@@ -12,6 +12,7 @@ from .crop import crop_images
 from kp_imc23.matching.loftr import loftr
 from kp_imc23.matching.superglue import superglue
 from .utils import concat_keypoints, build_superlist
+# from kp_imc23.external.hloc import extract_features, match_features
 from kp_imc23.external.hloc import extract_features, match_features,reconstruction
 
 import gc
@@ -61,12 +62,11 @@ def preprocess(
     
     match_features.main(
             conf= {
-                'output': 'matches-superglue-it5',
-                'model': {
-                    'name': 'superglue',
-                    'weights': 'outdoor',
-                    'sinkhorn_iterations': 5,
-                },
+                "output": "matches-loftr",
+                "model": {"name": "loftr", "weights": "outdoor"},
+                "preprocessing": {"grayscale": True, "resize_max": 840, "dfactor": 8},  # 1024,
+                "max_error": 1,  # max error for assigned keypoints (in px)
+                "cell_size": 1,  # size of quantization patch (max 1 kp/patch)
             },
             pairs=paths.pairs_path,
             features=paths.features_path,
