@@ -37,7 +37,7 @@ def database_colmap_run(
     import_into_colmap(paths.database_path, paths.keypoints_final_path, image_dir_used, paths.matches_final_path)
 
     # Match exhaustif of pycolmap for formatting
-    pycolmap.match_exhaustive(paths.database_path)
+    # pycolmap.match_exhaustive(paths.database_path)
 
     # Run COLMAP incremental mapping
     maps = COLMAP_mapping(paths.colmap_output, paths.database_path, image_dir_used)
