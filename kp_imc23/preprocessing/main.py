@@ -37,8 +37,8 @@ def preprocess(
 
     # # TODO: run in parallel
     # # extract important keypoints 
-    superglue(paths.rotated_image_dir,paths.pairs_path, paths.superglue_keypoints_pickle)
-    loftr(paths.rotated_image_dir,paths.pairs_path ,paths.loftr_model_weights, paths.loftr_keypoints_pickle)
+    # superglue(paths.rotated_image_dir,paths.pairs_path, paths.superglue_keypoints_pickle)
+    # loftr(paths.rotated_image_dir,paths.pairs_path ,paths.loftr_model_weights, paths.loftr_keypoints_pickle)
     
     # concat important keypoints
     keypoints = concat_keypoints(paths.superglue_keypoints_pickle,paths.loftr_keypoints_pickle)
