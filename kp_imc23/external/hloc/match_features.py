@@ -216,7 +216,7 @@ def match_from_paths(conf: Dict,
     assert pairs_path.exists(), pairs_path
     pairs = parse_retrieval(pairs_path)
     pairs = [(q, r) for q, rs in pairs.items() for r in rs]
-    pairs = find_unique_new_pairs(pairs, None if overwrite else match_path)
+    # pairs = find_unique_new_pairs(pairs, None if overwrite else match_path)
     if len(pairs) == 0:
         logger.info('Skipping the matching.')
         return
