@@ -309,7 +309,7 @@ def COLMAP_mapping(colmap_output, database_path, image_dir_used):
     os.makedirs(colmap_output, exist_ok=True)
 
     print("Running the mapping")
-    print(vars(mapper_options))
+    print(mapper_options)
 
     maps = pycolmap.incremental_mapping(database_path=str(database_path), image_path=str(image_dir_used),\
                                     output_path=str(colmap_output), options=mapper_options)
