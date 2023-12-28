@@ -36,7 +36,6 @@ def preprocess(
     # # compute pairs 
     image_dir_used = paths.input_dir_images
     # compute_pairs(image_dir_used, image_list, paths.features_retrieval, paths.pairs_path)
-
     # # # TODO: run in parallel
     # # # extract important keypoints 
     # sg_keypoints = superglue(paths.rotated_image_dir,paths.pairs_path, paths.superglue_keypoints_pickle)
@@ -106,7 +105,6 @@ def preprocess(
         matches=paths.matches_path,
         camera_mode=camera_mode,
         verbose=False,
-        reference_model=None,
         mapper_options=mapper_options.todict(),
         # skip_geometric_verification=True,
     )
