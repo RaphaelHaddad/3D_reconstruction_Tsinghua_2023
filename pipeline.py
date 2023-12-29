@@ -54,7 +54,7 @@ def main():
     paths = configurate(
         data_dir="../input/image-matching-challenge-2023/",
         output_dir="./output",
-        dataset="haiper",
+        dataset="heritage",
         scene="cyprus",
         mode="train"
     )
