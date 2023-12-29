@@ -40,7 +40,6 @@ def split_images(images_dir: Path,image_list: List[str],output_dir: Path):
             # Create output subfolder for the current image
             image_filename, _ = os.path.splitext(image_file)
             output_subfolder = f"{output_dir}/{image_filename}"
-            output_subfolder.mkdir(exist_ok=True)
 
             # Save the individual parts
             cv2.imwrite(f"{output_subfolder}_top_left.jpg"    , top_left)
