@@ -39,14 +39,17 @@ def preprocess(
     # # # extract important keypoints 
     extract_features.main(
             conf= {
-                'output': 'feats-disk',
-                'model': {
-                    'name': 'disk',
-                    'max_keypoints': 5000,
+                "output": "feats-aliked2k",
+                "model": {
+                    "name": "aliked",
+                    "model_name": "aliked-n16",  # 'aliked-t16', 'aliked-n16', 'aliked-n16rot', 'aliked-n32'
+                    "max_num_keypoints": 2048,
+                    "detection_threshold": 0.0,
+                    "force_num_keypoints": False,
                 },
-                'preprocessing': {
-                    'grayscale': False,
-                    'resize_max': 1600,
+                "preprocessing": {
+                    "resize_max": 1600,
+                    # "resize_force": True,
                 },
             },
             image_dir=paths.rotated_image_dir,
@@ -56,10 +59,13 @@ def preprocess(
     
     matchers_confs = {
         'lightglue': {
-            'output': 'matches-disk-lightglue',
-            'model': {
-                'name': 'lightglue',
-                'features': 'disk',
+            "output": "matches-aliked2k-lightglue",
+            "model": {
+                "name": "lightglue",
+                "weights": "aliked_lightglue",
+                "input_dim": 128,
+                "flash": True,
+                "filter_threshold": 0.01,
             },
         },
         'loftr': {
