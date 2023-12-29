@@ -53,10 +53,12 @@ def crop_images(images_dir: Path,pairs_path,output_dir,keypoints,resize = [1376,
 
         current = keypoints[image_0_name][image_1_name]["keypoints0"]
 
-        if( image_0_name not in matches_per_image or len(current) > matches_per_image[image_0_name]):
-            print(f"Biggest matches found: {len(current)}")
-            matches_per_image[image_0_name] = len(current)
+        if( image_0_name not in matches_per_image or len(current) > matches_per_image[image_0_name][0]):
+            matches_per_image[image_0_name] = (len(current), current)
 
-            print(f"Crop image: {image_0_name}")
-            crop_image0,_,_ = crop_image(image0, current, 20)
-            cv2.imwrite(str(output_dir / image_0_name), crop_image0)
+    for key, value in matches_per_image.items():
+        length, current = value
+        print(f"Biggest matches found: {length}")
+        print(f"Crop image: {image_0_name}")
+        crop_image0,_,_ = crop_image(image0, current, 20)
+        cv2.imwrite(str(output_dir / image_0_name), crop_image0)

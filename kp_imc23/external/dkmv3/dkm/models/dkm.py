@@ -5,9 +5,9 @@ from PIL import Image
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from dkm.utils import get_tuple_transform_ops
+from ...dkm.utils import get_tuple_transform_ops
 from einops import rearrange
-from dkm.utils.local_correlation import local_correlation
+from ...dkm.utils.local_correlation import local_correlation
 
 
 class ConvRefiner(nn.Module):

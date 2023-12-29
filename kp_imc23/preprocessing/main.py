@@ -10,6 +10,7 @@ from .rotate import rotate_images
 from .pairs import compute_pairs 
 from .crop import crop_images 
 from ...kp_imc23.matching.loftr import loftr
+from ...kp_imc23.matching.dkmv3 import dkmv3
 from ...kp_imc23.matching.superglue import superglue
 from .utils import concat_keypoints, build_superlist
 
@@ -17,7 +18,8 @@ from .utils import concat_keypoints, build_superlist
 
 def preprocess(
     paths: DataPaths,
-    args: argparse.Namespace
+    args: argparse.Namespace,
+    dkm: bool = False
 ) -> Tuple[Dict[str, Any], bool]:
     """Preprocess images and output rotated images, and computed pairs.
 
@@ -38,8 +40,11 @@ def preprocess(
     # # TODO: run in parallel
     # # extract important keypoints 
     superglue(paths.rotated_image_dir,paths.pairs_path, paths.superglue_keypoints_pickle)
-    loftr(paths.rotated_image_dir,paths.pairs_path ,paths.loftr_model_weights, paths.loftr_keypoints_pickle)
-    
+    if dkm is False:
+        loftr(paths.rotated_image_dir,paths.pairs_path ,paths.loftr_model_weights, paths.loftr_keypoints_pickle)
+    else:
+        dkmv3(paths.rotated_image_dir,paths.pairs_path ,paths.loftr_model_weights, paths.loftr_keypoints_pickle)
+
     # concat important keypoints
     keypoints = concat_keypoints(paths.superglue_keypoints_pickle,paths.loftr_keypoints_pickle)
 
