@@ -1,6 +1,6 @@
 
 from ..utils.base_model import BaseModel
-from lightglue.aliked import ALIKED
+from .lightglue.aliked import ALIKED
 class Aliked(BaseModel):
     default_conf = {
         "model_name": "aliked-n16",
