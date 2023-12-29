@@ -51,7 +51,7 @@ class DataPaths:
         self.submission_path = self.output_scene_dir / "submission.csv"
 
         # for cropping
-        self.cropped_image_dir = self.output_scene_dir / "images_cropped"
+        self.cropped_image_dir = self.output_scene_dir / "images_cropped2"
 
         # create directories
         self.output_scene_dir.mkdir(parents=True, exist_ok=True)

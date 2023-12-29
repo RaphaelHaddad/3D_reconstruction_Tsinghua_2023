@@ -37,19 +37,17 @@ def preprocess(
     # # # extract important keypoints 
     extract_features.main(
             conf= {
-                'output': 'feats-superpoint-n4096-rmax1600',
+                'output': 'feats-disk',
                 'model': {
-                    'name': 'superpoint',
-                    'nms_radius': 4,
-                    'max_keypoints': 4096,
+                    'name': 'disk',
+                    'max_keypoints': 5000,
                 },
                 'preprocessing': {
-                    'grayscale': True,
+                    'grayscale': False,
                     'resize_max': 1600,
-                    'resize_force': True,
                 },
             },
-            image_dir=paths.rotated_image_dir,
+            image_dir=paths.cropped_image_dir,
             image_list=image_list,
             feature_path=paths.features_path,
         )
