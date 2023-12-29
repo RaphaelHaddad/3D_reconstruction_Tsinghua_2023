@@ -43,7 +43,7 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
     paths = DataPaths(Path(data_dir), Path(output_dir), dataset, scene, mode)
     return paths
 
-def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue"):
+def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue", num_pairs=10):
     # paths = configurate(
     #     data_dir=".",
     #     output_dir="./output",
@@ -62,7 +62,7 @@ def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue")
     image_list = os.listdir(paths.input_dir_images)
 
     # preprocess images
-    preprocess(paths, image_list, args=None, matcher=preprocess_matcher)
+    preprocess(paths, image_list, args=None, matcher=preprocess_matcher, num_pairs=num_pairs)
 
     # Database
     database_colmap_run(paths, image_list, args=None)
