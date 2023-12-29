@@ -31,6 +31,8 @@ def preprocess(
         args (argparse.Namespace): Arguments.
     """
 
+    print(f"Image List: {image_list}")
+
     # # rotate images
     rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
@@ -67,9 +69,9 @@ def preprocess(
         'loftr': {
             "output": "matches-loftr",
             "model": {"name": "loftr", "weights": "outdoor"},
-            "preprocessing": {"grayscale": True, "resize_max": 840, "dfactor": 8},  # 1024,
-            "max_error": 1,  # max error for assigned keypoints (in px)
-            "cell_size": 1,  # size of quantization patch (max 1 kp/patch)
+            "preprocessing": {"grayscale": True, "resize_max": 1024, "dfactor": 8},  # 1024,
+            "max_error": 2,  # max error for assigned keypoints (in px)
+            "cell_size": 8,  # size of quantization patch (max 1 kp/patch)
         },
         'dkm': {
             "output": "matches-dkm",
