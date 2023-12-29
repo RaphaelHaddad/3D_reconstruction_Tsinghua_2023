@@ -10,7 +10,7 @@ class Aliked(BaseModel):
     }
 
     def _init(self, conf):
-        self.net = ALIKED(conf)
+        self.net = ALIKED(**conf)
 
     def _forward(self, data):
         return self.net(data)
