@@ -14,7 +14,7 @@ from kp_imc23.matching.superglue import superglue
 from .utils import concat_keypoints, build_superlist
 # from kp_imc23.external.hloc import extract_features, match_features
 from kp_imc23.external.hloc import extract_features, match_features,reconstruction, match_dense
-
+from .split import split_images
 import gc
 
 def preprocess(
@@ -36,6 +36,10 @@ def preprocess(
     # # rotate images
     rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
+    # # split images
+    split_images(paths.rotated_image_dir, image_list, paths.split_image_dir)
+
+    return
     # # compute pairs 
     compute_pairs(paths.input_dir_images, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
     # # # extract important keypoints 
@@ -53,7 +57,7 @@ def preprocess(
                     'resize_force': True,
                 },
             },
-            image_dir=paths.rotated_image_dir,
+            image_dir=paths.split_image_dir,
             image_list=image_list,
             feature_path=paths.features_path,
         )
@@ -90,7 +94,7 @@ def preprocess(
         features, loc_matches = match_dense.main(
             conf=matchers_confs["loftr"],
             pairs=paths.pairs_path,
-            image_dir=paths.rotated_image_dir,
+            image_dir=paths.split_image_dir,
             features=paths.features_path,
             matches=paths.matches_path, 
             max_kps=None,
@@ -100,7 +104,7 @@ def preprocess(
         features, loc_matches = match_dense.main(
             conf=matchers_confs["dkm"],
             pairs=paths.pairs_path,
-            image_dir=paths.rotated_image_dir,
+            image_dir=paths.split_image_dir,
             features=paths.features_path,
             matches=paths.matches_path, 
             max_kps=None,
