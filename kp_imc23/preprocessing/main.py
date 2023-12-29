@@ -32,10 +32,10 @@ def preprocess(
     """
 
     # # rotate images
-    rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
+    # rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
     # # compute pairs 
-    compute_pairs(paths.input_dir_images, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
+    # compute_pairs(paths.input_dir_images, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
     # # # extract important keypoints 
     extract_features.main(
             conf= {
@@ -63,7 +63,7 @@ def preprocess(
             #         # "resize_force": True,
             #     },
             # },
-            image_dir=paths.rotated_image_dir,
+            image_dir=paths.input_dir_images,
             image_list=image_list,
             feature_path=paths.features_path,
         )
