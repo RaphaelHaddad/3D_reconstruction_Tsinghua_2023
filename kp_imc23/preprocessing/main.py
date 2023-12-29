@@ -91,7 +91,10 @@ def preprocess(
             features=paths.features_path,
             matches=paths.matches_path, 
             max_kps=None,
+            overwrite=True
         )
+        print(paths.features_path, paths.matches_path)
+        print(features, loc_matches)
     
     
     # concat important keypoints
