@@ -38,9 +38,11 @@ def preprocess(
 
     # # split images
     image_list = split_images(paths.rotated_image_dir, image_list, paths.split_image_dir)
+    print(f"test: {paths.split_image_dir}")
 
     # # compute pairs 
-    compute_pairs(paths.input_dir_images, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
+    compute_pairs(paths.split_image_dir, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
+    print(f"test: {paths.split_image_dir}")
     # # # extract important keypoints 
     extract_features.main(
             conf= {
