@@ -38,7 +38,7 @@ def preprocess(
 
     # # split images
     image_list = split_images(paths.rotated_image_dir, image_list, paths.split_image_dir)
-    print(image_list)
+
     print(f"test: {paths.split_image_dir}")
 
     # # compute pairs 
