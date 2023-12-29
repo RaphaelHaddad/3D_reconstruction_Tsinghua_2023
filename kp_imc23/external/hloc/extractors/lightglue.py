@@ -484,8 +484,8 @@ class LightGlue(nn.Module):
         desc0 = data0["descriptors"].detach().contiguous()
         desc1 = data1["descriptors"].detach().contiguous()
 
-        # assert desc0.shape[-1] == self.conf.input_dim
-        # assert desc1.shape[-1] == self.conf.input_dim
+        assert desc0.shape[-1] == self.conf.input_dim
+        assert desc1.shape[-1] == self.conf.input_dim
 
         if torch.is_autocast_enabled():
             desc0 = desc0.half()
