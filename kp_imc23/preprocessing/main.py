@@ -21,7 +21,8 @@ def preprocess(
     paths: DataPaths,
     image_list,
     args: argparse.Namespace,
-    matcher: str = "lightglue" # "lightglue" or "loftr" or "dkm"
+    matcher: str = "lightglue", # "lightglue" or "loftr" or "dkm"
+    num_pairs: int = 10,
 ) -> Tuple[Dict[str, Any], bool]:
     """Preprocess images and output rotated images, and computed pairs.
 
@@ -34,7 +35,7 @@ def preprocess(
     rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
     # # compute pairs 
-    compute_pairs(paths.input_dir_images, image_list, paths.features_retrieval, paths.pairs_path)
+    compute_pairs(paths.input_dir_images, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
     # # # extract important keypoints 
     extract_features.main(
             conf= {
