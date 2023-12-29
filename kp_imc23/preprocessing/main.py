@@ -21,7 +21,7 @@ def preprocess(
     paths: DataPaths,
     image_list,
     args: argparse.Namespace,
-    matcher: str = "lightglue", # "lightglue" or "loftr" or "dkm"
+    matcher: ["lightglue"], # "lightglue" or "loftr" or "dkm"
     num_pairs: int = 10,
 ) -> Tuple[Dict[str, Any], bool]:
     """Preprocess images and output rotated images, and computed pairs.
@@ -79,25 +79,33 @@ def preprocess(
         }
     }
     
-    if matcher == "lightglue":
+    if "lightglue" in matcher:
         match_features.main(
-                conf=matchers_confs[matcher],
+                conf=matchers_confs["lightglue"],
                 pairs=paths.pairs_path,
                 features=paths.features_path,
                 matches=paths.matches_path, 
         )
-    else:
+    if "loftr" in matcher:
         features, loc_matches = match_dense.main(
-            conf=matchers_confs[matcher],
+            conf=matchers_confs["loftr"],
             pairs=paths.pairs_path,
             image_dir=paths.rotated_image_dir,
             features=paths.features_path,
             matches=paths.matches_path, 
             max_kps=None,
-            overwrite=True
+            overwrite=False
         )
-        print(paths.features_path, paths.matches_path)
-        print(features, loc_matches)
+    if "dkm" in matcher:
+        features, loc_matches = match_dense.main(
+            conf=matchers_confs["dkm"],
+            pairs=paths.pairs_path,
+            image_dir=paths.rotated_image_dir,
+            features=paths.features_path,
+            matches=paths.matches_path, 
+            max_kps=None,
+            overwrite=False
+        )
     
     
     # concat important keypoints
