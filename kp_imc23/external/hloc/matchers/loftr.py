@@ -35,7 +35,7 @@ class LoFTR(BaseModel):
         for k, v in data.items():
             print(k, v)
         #data_ = {rename[k]: v for k, v in data.items()}
-        data_ = {k: v.to('cuda') for k, v in data.items()}
+        data_ = {k: v.to('cpu') for k, v in data.items()}
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             pred = self.net(data_)
