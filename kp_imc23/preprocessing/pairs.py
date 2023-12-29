@@ -30,9 +30,11 @@ def compute_pairs(image_dir:Path,img_list,features_retrieval_path,pairs_path, nu
         feature_path=features_retrieval_path,
     )
 
+    print(f"Pairs size: {min(num_pairs, len(img_list))}")
+
     pairs_from_retrieval.main(
         descriptors=features_retrieval_path,
-        num_matched=num_pairs,
+        num_matched=min(num_pairs, len(img_list)),
         output=pairs_path,
     )   
 
