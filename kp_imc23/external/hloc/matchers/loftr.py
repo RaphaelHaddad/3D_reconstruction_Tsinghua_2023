@@ -35,7 +35,10 @@ class LoFTR(BaseModel):
         for k, v in data.items():
             print(k, v)
         #data_ = {rename[k]: v for k, v in data.items()}
-        data_ = {k: v.to('cuda') for k, v in data.items()}
+        data_ = data
+        for k, v in data.items():
+            if v.device.type == "cpu":
+                data_[k] = v.cuda()
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             pred = self.net(data_)
