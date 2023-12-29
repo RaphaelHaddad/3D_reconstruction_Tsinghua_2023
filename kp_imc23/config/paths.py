@@ -33,7 +33,7 @@ class DataPaths:
         self.loftr_keypoints_pickle = self.loftr_keypoints_dir / "keypoints.pickle"
 
         # for rotation 
-        self.rotated_image_dir = self.output_scene_dir / "images_rotated"
+        self.rotated_image_dir = self.output_scene_dir / "images_rotated3"
         self.rotated_features_path = self.output_scene_dir / "features_rotated.h5"
         
         self.sfm_dir = self.output_scene_dir / "sparse"
