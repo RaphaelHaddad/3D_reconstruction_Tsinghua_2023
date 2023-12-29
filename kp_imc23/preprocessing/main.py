@@ -38,60 +38,60 @@ def preprocess(
     # compute_pairs(paths.input_dir_images, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
     # # # extract important keypoints 
     extract_features.main(
-            conf= {
-                "output": "feats-disk",
-                "model": {
-                    "name": "disk",
-                    "max_keypoints": 5000,
-                },
-                "preprocessing": {
-                    "grayscale": False,
-                    "resize_max": 1600,
-                },
-            },
             # conf= {
-            #     "output": "feats-aliked2k",
+            #     "output": "feats-disk",
             #     "model": {
-            #         "name": "aliked",
-            #         "model_name": "aliked-n16",  # 'aliked-t16', 'aliked-n16', 'aliked-n16rot', 'aliked-n32'
-            #         "max_num_keypoints": 2048,
-            #         "detection_threshold": 0.0,
-            #         "force_num_keypoints": False,
+            #         "name": "disk",
+            #         "max_keypoints": 5000,
             #     },
             #     "preprocessing": {
+            #         "grayscale": False,
             #         "resize_max": 1600,
-            #         # "resize_force": True,
             #     },
             # },
+            conf= {
+                "output": "feats-aliked2k",
+                "model": {
+                    "name": "aliked",
+                    "model_name": "aliked-n16",  # 'aliked-t16', 'aliked-n16', 'aliked-n16rot', 'aliked-n32'
+                    "max_num_keypoints": 2048,
+                    "detection_threshold": 0.0,
+                    "force_num_keypoints": False,
+                },
+                "preprocessing": {
+                    "resize_max": 1600,
+                    # "resize_force": True,
+                },
+            },
             image_dir=paths.input_dir_images,
             image_list=image_list,
             feature_path=paths.features_path,
         )
     
     matchers_confs = {
-        'lightglue': {
-            "output": "matches-disk-lightglue",
-            "model": {
-                "name": "lightglue",
-                "weights": "disk_lightglue_legacy",
-                "input_dim": 128,
-                "flash": True,
-                "filter_threshold": 0.01,
-                "rotary": {
-                    "axial": True,
-                },
-            },
-        },
         # 'lightglue': {
-        #     "output": "matches-aliked2k-lightglue",
+        #     "output": "matches-disk-lightglue",
         #     "model": {
         #         "name": "lightglue",
-        #         "weights": "aliked_lightglue",
+        #         "weights": "disk_lightglue_legacy",
         #         "input_dim": 128,
         #         "flash": True,
         #         "filter_threshold": 0.01,
+        #         "rotary": {
+        #             "axial": True,
+        #         },
         #     },
         # },
+        'lightglue': {
+            "output": "matches-aliked2k-lightglue",
+            "model": {
+                "name": "lightglue",
+                "weights": "aliked_lightglue",
+                "input_dim": 128,
+                "flash": True,
+                "filter_threshold": 0.01,
+            },
+        },
         'loftr': {
             "output": "matches-loftr",
             "model": {"name": "loftr", "weights": "outdoor"},
