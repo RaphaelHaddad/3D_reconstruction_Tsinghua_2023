@@ -33,10 +33,10 @@ def preprocess(
     print(f"Image List: {os.listdir(paths.input_dir_images)}")
 
     # # rotate images
-    rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
+    rotate_images(paths.input_dir_images, os.listdir(paths.input_dir_images), paths.rotated_image_dir, paths.rotation_model_weights)
 
     # # split images
-    image_list = split_images(paths.rotated_image_dir, image_list, paths.split_image_dir)
+    image_list = split_images(paths.rotated_image_dir, os.listdir(paths.input_dir_images), paths.split_image_dir)
 
     print(f"test: {paths.split_image_dir}")
 
