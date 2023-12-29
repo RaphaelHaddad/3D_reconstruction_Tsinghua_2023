@@ -32,8 +32,10 @@ class LoFTR(BaseModel):
             'mask0': 'mask1',
             'mask1': 'mask0',
         }
-        print(data)
-        data_ = {rename[k]: v for k, v in data.items()}
+        for k, v in data.items():
+            print(k, v)
+        #data_ = {rename[k]: v for k, v in data.items()}
+        data_ = data
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             pred = self.net(data_)
