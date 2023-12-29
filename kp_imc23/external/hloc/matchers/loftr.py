@@ -4,7 +4,7 @@ from kornia.feature.loftr.loftr import default_cfg
 from kornia.feature import LoFTR as LoFTR_
 
 from ..utils.base_model import BaseModel
-
+import torch.nn as nn
 
 class LoFTR(BaseModel):
     default_conf = {
@@ -20,7 +20,7 @@ class LoFTR(BaseModel):
     def _init(self, conf):
         cfg = default_cfg
         cfg['match_coarse']['thr'] = conf['match_threshold']
-        self.net = LoFTR_(pretrained=conf['weights'], config=cfg)
+        self.net = nn.DataParallel(LoFTR_(pretrained=conf['weights'], config=cfg))
 
     def _forward(self, data):
         # For consistency with hloc pairs, we refine kpts in image0!
