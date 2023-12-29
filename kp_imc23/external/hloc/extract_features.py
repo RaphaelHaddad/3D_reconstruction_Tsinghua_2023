@@ -243,7 +243,7 @@ def main(conf: Dict,
                 f'\n{pprint.pformat(conf)}')
 
     print(image_dir)
-    print(image_list)
+
     dataset = ImageDataset(image_dir, conf['preprocessing'], image_list)
     if feature_path is None:
         feature_path = Path(export_dir, conf['output']+'.h5')

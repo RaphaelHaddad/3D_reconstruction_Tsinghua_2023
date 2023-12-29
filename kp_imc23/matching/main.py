@@ -70,7 +70,7 @@ def database_colmap_run(
     mapper_options.ba_global_images_freq = 1500   #(default: 500)
     mapper_options.ba_global_points_freq = 350000 #(default: 250000)
 
-    print(image_list)
+    
     sparse_model = reconstruction.main(
         sfm_dir=paths.sfm_dir,
         image_dir=paths.rotated_image_dir,
