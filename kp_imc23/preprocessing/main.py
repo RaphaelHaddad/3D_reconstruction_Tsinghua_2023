@@ -37,7 +37,7 @@ def preprocess(
     rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
     # # split images
-    split_images(paths.rotated_image_dir, image_list, paths.split_image_dir)
+    image_list = split_images(paths.rotated_image_dir, image_list, paths.split_image_dir)
 
     # # compute pairs 
     compute_pairs(paths.input_dir_images, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
