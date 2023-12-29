@@ -49,7 +49,7 @@ def preprocess(
                     'resize_force': True,
                 },
             },
-            image_dir=paths.cropped_image_dir,
+            image_dir=paths.rotated_image_dir,
             image_list=image_list,
             feature_path=paths.features_path,
         )
