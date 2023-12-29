@@ -21,7 +21,7 @@ def preprocess(
     paths: DataPaths,
     image_list,
     args: argparse.Namespace,
-    matcher: ["lightglue"], # "lightglue" or "loftr" or "dkm"
+    matcher = ["lightglue"], # "lightglue" or "loftr" or "dkm"
     num_pairs: int = 10,
 ) -> Tuple[Dict[str, Any], bool]:
     """Preprocess images and output rotated images, and computed pairs.
