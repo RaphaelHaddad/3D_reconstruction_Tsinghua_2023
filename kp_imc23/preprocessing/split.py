@@ -41,7 +41,7 @@ def split_images(images_dir: Path,image_list: List[str],output_dir: Path):
             output_subfolder.mkdir(exist_ok=True)
 
             # Save the individual parts
-            cv2.imwrite(str(output_subfolder / 'top_left.jpg'), top_left)
-            cv2.imwrite(str(output_subfolder / 'top_right.jpg'), top_right)
-            cv2.imwrite(str(output_subfolder / 'bottom_left.jpg'), bottom_left)
-            cv2.imwrite(str(output_subfolder / 'bottom_right.jpg'), bottom_right)
+            cv2.imwrite(f"{output_subfolder}_top_left.jpg", top_left)
+            cv2.imwrite(f"{output_subfolder}_top_right.jpg", top_right)
+            cv2.imwrite(f"{output_subfolder}_bottom_left.jpg", bottom_left)
+            cv2.imwrite(f"{output_subfolder}_bottom_right.jpg", bottom_right)
