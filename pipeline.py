@@ -16,9 +16,9 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
     diodModelPath = "./weights/model-vit-ang-loss.h5"
     if not os.path.exists("./weights/"):
         os.makedirs("./weights/")
-    # if not os.path.exists(diodModelPath):
-    #     print("Downloading weights...")
-    #     gdown.download("https://drive.google.com/u/0/uc?id=1sdmPmaDhivdHPfn9M9vAkTbiprbPq94e&export=download", diodModelPath, quiet=False)
+    if not os.path.exists(diodModelPath):
+        print("Downloading weights...")
+        gdown.download("https://drive.google.com/u/0/uc?id=1sdmPmaDhivdHPfn9M9vAkTbiprbPq94e&export=download", diodModelPath, quiet=False)
 
     # # download weights of superglue
     superGlueWeights = ["superglue_indoor.pth", "superglue_outdoor.pth", "superpoint_v1.pth"]
