@@ -13,7 +13,7 @@ from kp_imc23.matching.loftr import loftr
 from kp_imc23.matching.superglue import superglue
 from .utils import concat_keypoints, build_superlist
 # from kp_imc23.external.hloc import extract_features, match_features
-from kp_imc23.external.hloc import extract_features, match_features,reconstruction
+from kp_imc23.external.hloc import extract_features, match_features,reconstruction, match_dense
 
 import gc
 
@@ -76,13 +76,22 @@ def preprocess(
         }
     }
     
-    match_features.main(
+    if matcher == "lightglue":
+        match_features.main(
+                conf=matchers_confs[matcher],
+                pairs=paths.pairs_path,
+                features=paths.features_path,
+                matches=paths.matches_path, 
+        )
+    else:
+        features, loc_matches = match_dense.main(
             conf=matchers_confs[matcher],
             pairs=paths.pairs_path,
+            image_dir=paths.rotated_image_dir,
             features=paths.features_path,
             matches=paths.matches_path, 
-    )
-
+            max_kps=None,
+        )
     
     
     # concat important keypoints
