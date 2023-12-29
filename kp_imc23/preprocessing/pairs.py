@@ -32,7 +32,7 @@ def compute_pairs(image_dir:Path,img_list,features_retrieval_path,pairs_path) ->
 
     pairs_from_retrieval.main(
         descriptors=features_retrieval_path,
-        num_matched=30,
+        num_matched=15,
         output=pairs_path,
     )   
 
