@@ -46,9 +46,9 @@ def split_images(images_dir: Path,image_list: List[str],output_dir: Path):
             cv2.imwrite(f"{output_subfolder}_top_right.jpg"   , top_right)
             cv2.imwrite(f"{output_subfolder}_bottom_left.jpg" , bottom_left)
             cv2.imwrite(f"{output_subfolder}_bottom_right.jpg", bottom_right)
-            new_image_list.append(f"{output_subfolder}_top_left.jpg"    )
-            new_image_list.append(f"{output_subfolder}_top_right.jpg"   )
-            new_image_list.append(f"{output_subfolder}_bottom_left.jpg" )
-            new_image_list.append(f"{output_subfolder}_bottom_right.jpg")
+            new_image_list.append(f"{image_filename}_top_left.jpg"    )
+            new_image_list.append(f"{image_filename}_top_right.jpg"   )
+            new_image_list.append(f"{image_filename}_bottom_left.jpg" )
+            new_image_list.append(f"{image_filename}_bottom_right.jpg")
         
     return new_image_list
