@@ -144,6 +144,20 @@ confs = {
         'output': 'global-feats-eigenplaces',
         'model': {'name': 'eigenplaces'},
         'preprocessing': {'resize_max': 1024},
+    },
+    "aliked":{
+        "output": "feats-aliked2k",
+        "model": {
+            "name": "aliked",
+            "model_name": "aliked-n16",  # 'aliked-t16', 'aliked-n16', 'aliked-n16rot', 'aliked-n32'
+            "max_num_keypoints": 2048,
+            "detection_threshold": 0.0,
+            "force_num_keypoints": False,
+        },
+        "preprocessing": {
+            "resize_max": 1600,
+            # "resize_force": True,
+        },
     }
 }
 
