@@ -19,7 +19,6 @@ import gc
 
 def preprocess(
     paths: DataPaths,
-    image_list,
     args: argparse.Namespace,
     matcher = ["lightglue"], # "lightglue" or "loftr" or "dkm"
     num_pairs: int = 10,
@@ -31,7 +30,7 @@ def preprocess(
         args (argparse.Namespace): Arguments.
     """
 
-    print(f"Image List: {image_list}")
+    print(f"Image List: {os.listdir(paths.input_dir_images)}")
 
     # # rotate images
     rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
@@ -112,6 +111,8 @@ def preprocess(
             max_kps=None,
             overwrite=False
         )
+
+    return image_list
     
     
     # concat important keypoints

@@ -59,10 +59,9 @@ def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue",
         mode=mode
     )
 
-    image_list = os.listdir(paths.input_dir_images)
 
     # preprocess images
-    preprocess(paths, image_list, args=None, matcher=preprocess_matcher, num_pairs=num_pairs)
+    image_list = preprocess(paths, args=None, matcher=preprocess_matcher, num_pairs=num_pairs)
 
     # Database
     database_colmap_run(paths, image_list, args=None)
