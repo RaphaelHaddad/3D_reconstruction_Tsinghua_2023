@@ -20,7 +20,8 @@ import gc
 def preprocess(
     paths: DataPaths,
     image_list,
-    args: argparse.Namespace
+    args: argparse.Namespace,
+    matcher: str = "lightglue" # "lightglue" or "loftr" or "dkm"
 ) -> Tuple[Dict[str, Any], bool]:
     """Preprocess images and output rotated images, and computed pairs.
 
@@ -30,10 +31,10 @@ def preprocess(
     """
 
     # # rotate images
-    # rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
+    rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
     # # compute pairs 
-    # compute_pairs(paths.input_dir_images, image_list, paths.features_retrieval, paths.pairs_path)
+    compute_pairs(paths.input_dir_images, image_list, paths.features_retrieval, paths.pairs_path)
     # # # extract important keypoints 
     extract_features.main(
             conf= {
@@ -54,18 +55,33 @@ def preprocess(
             feature_path=paths.features_path,
         )
     
+    matchers_confs = {
+        'lightglue': {
+            'output': 'matches-superpoint-lightglue',
+            'model': {
+                'name': 'lightglue',
+                'features': 'superpoint',
+            }
+        },
+        'loftr': {
+            "output": "matches-loftr",
+            "model": {"name": "loftr", "weights": "outdoor"},
+            "preprocessing": {"grayscale": True, "resize_max": 840, "dfactor": 8},  # 1024,
+            "max_error": 1,  # max error for assigned keypoints (in px)
+            "cell_size": 1,  # size of quantization patch (max 1 kp/patch)
+        },
+        'dkm': {
+            "output": "matches-dkm",
+            "model": {"name": "dkm", "weights": "outdoor"},
+        }
+    }
+    
     match_features.main(
-            conf= {
-                'output': 'matches-superpoint-lightglue',
-                'model': {
-                    'name': 'lightglue',
-                    'features': 'superpoint',
-                },
-            },
+            conf=matchers_confs[matcher],
             pairs=paths.pairs_path,
             features=paths.features_path,
-            matches=paths.matches_path,
-        )
+            matches=paths.matches_path, 
+    )
 
     
     
