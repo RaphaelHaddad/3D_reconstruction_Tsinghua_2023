@@ -42,8 +42,7 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
 
     paths = DataPaths(Path(data_dir), Path(output_dir), dataset, scene, mode)
     return paths
-def main():
-    dataset, scene = "heritage", "cyprus"
+def main(data_dir, dataset, scene, mode="train"):
     # paths = configurate(
     #     data_dir=".",
     #     output_dir="./output",
@@ -52,11 +51,11 @@ def main():
     #     mode="train"
     # )
     paths = configurate(
-        data_dir="../input/image-matching-challenge-2023/",
+        data_dir=data_dir,
         output_dir="./output",
         dataset=dataset,
         scene=scene,
-        mode="train"
+        mode=mode
     )
 
     image_list = os.listdir(paths.input_dir_images)
