@@ -40,7 +40,7 @@ def preprocess(
     # # split images
     if with_splitting:
         old_image_list = image_list
-        image_list = split_images(paths.rotated_image_dir, image_list, paths.split_image_dir)
+        image_list, image_tables = split_images(paths.rotated_image_dir, image_list, paths.split_image_dir)
 
     # # compute pairs 
     compute_pairs(paths.split_image_dir if with_splitting else paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
@@ -63,7 +63,7 @@ def preprocess(
             image_list=image_list,
             feature_path=paths.features_path,
             with_splitting=with_splitting,
-            unsplit_image_list=old_image_list,
+            image_tables=image_tables,
         )
     
     matchers_confs = {

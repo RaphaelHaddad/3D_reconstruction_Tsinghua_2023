@@ -239,7 +239,7 @@ def main(conf: Dict,
          image_list: Optional[Union[Path, List[str]]] = None,
          feature_path: Optional[Path] = None,
          with_splitting: bool = False,
-         unsplit_image_list: Optional[Union[Path, List[str]]] = None,
+         image_tables: Optional[Dict[str, List[str]]] = None,
          overwrite: bool = False) -> Path:
     logger.info('Extracting local features with configuration:'
                 f'\n{pprint.pformat(conf)}')
@@ -266,8 +266,6 @@ def main(conf: Dict,
     preds = {}
     for idx, data in enumerate(tqdm(loader)):
         name = dataset.names[idx]
-        print(f"name: {name}")
-        exit()
         preds[name] = model({'image': data['image'].to(device, non_blocking=True)})
         preds[name] = {k: v[0].cpu().numpy() for k, v in preds[name].items()}
 
@@ -281,48 +279,61 @@ def main(conf: Dict,
             # add keypoint uncertainties scaled to the original resolution
             uncertainty = getattr(model, 'detection_noise', 1) * scales.mean()
 
+        print(preds[name])
+        print(vars(preds[name]))
+        exit()
+
         if as_half:
             for k in preds[name]:
                 dt = preds[name][k].dtype
                 if (dt == np.float32) and (dt != np.float16):
                     preds[name][k] = preds[name][k].astype(np.float16)
 
-        # with h5py.File(str(feature_path), 'a', libver='latest') as fd:
-        #     try:
-        #         if name in fd:
-        #             del fd[name]
-        #         grp = fd.create_group(name)
-        #         for k, v in preds[name].items():
-        #             grp.create_dataset(k, data=v)
-        #         if 'keypoints' in preds[name]:
-        #             grp['keypoints'].attrs['uncertainty'] = uncertainty
-        #     except OSError as error:
-        #         if 'No space left on device' in error.args[0]:
-        #             logger.error(
-        #                 'Out of disk space: storing features on disk can take '
-        #                 'significant space, did you enable the as_half flag?')
-        #             del grp, fd[name]
-        #         raise error
+        if not with_splitting:
+            with h5py.File(str(feature_path), 'a', libver='latest') as fd:
+                try:
+                    if name in fd:
+                        del fd[name]
+                    grp = fd.create_group(name)
+                    for k, v in preds[name].items():
+                        grp.create_dataset(k, data=v)
+                    if 'keypoints' in preds[name]:
+                        grp['keypoints'].attrs['uncertainty'] = uncertainty
+                except OSError as error:
+                    if 'No space left on device' in error.args[0]:
+                        logger.error(
+                            'Out of disk space: storing features on disk can take '
+                            'significant space, did you enable the as_half flag?')
+                        del grp, fd[name]
+                    raise error
 
-        # del preds[name]
+            del preds[name]
 
-    for idx, data in enumerate(tqdm(loader)):
-        with h5py.File(str(feature_path), 'a', libver='latest') as fd:
-            try:
-                if name in fd:
-                    del fd[name]
-                grp = fd.create_group(name)
-                for k, v in preds[name].items():
-                    grp.create_dataset(k, data=v)
-                if 'keypoints' in preds[name]:
-                    grp['keypoints'].attrs['uncertainty'] = uncertainty
-            except OSError as error:
-                if 'No space left on device' in error.args[0]:
-                    logger.error(
-                        'Out of disk space: storing features on disk can take '
-                        'significant space, did you enable the as_half flag?')
-                    del grp, fd[name]
-                raise error
+    if with_splitting:
+        grouped_preds = []
+        # Regroup features from the same image  
+        for idx, data in enumerate(tqdm(loader)):
+            name = dataset.names[idx]
+
+
+        for idx, data in enumerate(tqdm(loader)):
+            name = dataset.names[idx]
+            with h5py.File(str(feature_path), 'a', libver='latest') as fd:
+                try:
+                    if name in fd:
+                        del fd[name]
+                    grp = fd.create_group(name)
+                    for k, v in preds[name].items():
+                        grp.create_dataset(k, data=v)
+                    if 'keypoints' in preds[name]:
+                        grp['keypoints'].attrs['uncertainty'] = uncertainty
+                except OSError as error:
+                    if 'No space left on device' in error.args[0]:
+                        logger.error(
+                            'Out of disk space: storing features on disk can take '
+                            'significant space, did you enable the as_half flag?')
+                        del grp, fd[name]
+                    raise error
 
     logger.info('Finished exporting features.')
     return feature_path

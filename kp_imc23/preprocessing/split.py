@@ -16,6 +16,7 @@ def split_images(images_dir: Path,image_list: List[str],output_dir: Path):
     output_dir.mkdir(parents=True, exist_ok=True)
 
     new_image_list = []
+    image_tables = {}
 
     for image_file in tqdm(image_list, desc=f"Splitting {images_dir.name}", ncols=80):
         # Construct the full path to the input image
@@ -50,5 +51,11 @@ def split_images(images_dir: Path,image_list: List[str],output_dir: Path):
             new_image_list.append(f"{image_filename}_top_right.jpg"   )
             new_image_list.append(f"{image_filename}_bottom_left.jpg" )
             new_image_list.append(f"{image_filename}_bottom_right.jpg")
+            image_tables[image_file] = [
+                f"{image_filename}_top_left.jpg"    ,
+                f"{image_filename}_top_right.jpg"   ,
+                f"{image_filename}_bottom_left.jpg" ,
+                f"{image_filename}_bottom_right.jpg"
+            ]
         
-    return new_image_list
+    return new_image_list, image_tables
