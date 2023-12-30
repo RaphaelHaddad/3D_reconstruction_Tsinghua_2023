@@ -290,10 +290,10 @@ def main(conf: Dict,
             # inp = frame2tensor(tile, "cuda")
             pred2 = model({'image': tile[0].to(device, non_blocking=True)})
             pred2 = {k: v[0].cpu().numpy() for k, v in pred2.items()}
-            original_size = tile[0][0].numpy()
+            tile_size = (data['original_size'][0]/4).numpy()
             if 'keypoints' in pred2:
                 size = np.array(tile[0].shape[-2:][::-1])
-                scales = (original_size / size).astype(np.float32)
+                scales = (tile_size / size).astype(np.float32)
                 pred2['keypoints'] = (pred2['keypoints'] + .5) * scales[None] - .5
                 # add keypoint uncertainties scaled to the original resolution
                 x_offset, y_offset = offsets[i]
