@@ -280,7 +280,7 @@ def main(conf: Dict,
             uncertainty = getattr(model, 'detection_noise', 1) * scales.mean()
 
         print(preds[name])
-        print(vars(preds[name]))
+        print(dict(preds[name]))
         exit()
 
         if as_half:
