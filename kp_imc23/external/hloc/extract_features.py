@@ -283,15 +283,16 @@ def main(conf: Dict,
                 pred['scales'] *= scales.mean()
             # add keypoint uncertainties scaled to the original resolution
             uncertainty = getattr(model, 'detection_noise', 1) * scales.mean()
-            keypoints.append(pred['keypoints'])
+            # keypoints.append(pred['keypoints'])
 
         for i, tile in enumerate(zip(tiles)):
             
             # inp = frame2tensor(tile, "cuda")
             pred2 = model({'image': tile[0].to(device, non_blocking=True)})
             pred2 = {k: v[0].cpu().numpy() for k, v in pred2.items()}
-
+            original_size = tile[0].numpy()
             if 'keypoints' in pred2:
+                size = np.array(tile[0].shape[-2:][::-1])
                 scales = (original_size / size).astype(np.float32)
                 pred2['keypoints'] = (pred2['keypoints'] + .5) * scales[None] - .5
                 # add keypoint uncertainties scaled to the original resolution
@@ -300,7 +301,7 @@ def main(conf: Dict,
                 pred2['keypoints'][:, 1] += y_offset
                 keypoints.append(pred2['keypoints'])
             
-        if(len(keypoints)>2):
+        if(len(keypoints)>2 and len(keypoints)>len(pred["keypoints"])):
             keypoints = np.concatenate(keypoints, axis=0)
             pred["keypoints"] = keypoints
 
