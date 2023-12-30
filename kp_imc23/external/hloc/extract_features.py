@@ -303,7 +303,7 @@ def main(conf: Dict,
             
         if(len(keypoints)>2 and len(keypoints)>len(pred["keypoints"])):
             keypoints = np.concatenate(keypoints, axis=0)
-            pred["keypoints"] = keypoints
+            pred["keypoints"].append(keypoints)
 
 
         if as_half:
