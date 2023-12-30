@@ -23,6 +23,7 @@ def preprocess(
     args: argparse.Namespace,
     matcher = ["lightglue"], # "lightglue" or "loftr" or "dkm"
     num_pairs: int = 10,
+    with_splitting: bool = True,
 ) -> Tuple[Dict[str, Any], bool]:
     """Preprocess images and output rotated images, and computed pairs.
 
@@ -37,12 +38,13 @@ def preprocess(
     rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
 
     # # split images
-    #image_list = split_images(paths.rotated_image_dir, image_list, paths.split_image_dir)
-    
+    if with_splitting:
+        image_list = split_images(paths.rotated_image_dir, image_list, paths.split_image_dir)
+
     print(f"test: {paths.split_image_dir}")
 
     # # compute pairs 
-    compute_pairs(paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
+    compute_pairs(paths.split_image_dir if with_splitting else paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
     print(f"test: {paths.split_image_dir}")
     # # # extract important keypoints 
     extract_features.main(
@@ -59,7 +61,7 @@ def preprocess(
                     'resize_force': True,
                 },
             },
-            image_dir=paths.rotated_image_dir,
+            image_dir=paths.split_image_dir if with_splitting else paths.rotated_image_dir,
             image_list=image_list,
             feature_path=paths.features_path,
         )
