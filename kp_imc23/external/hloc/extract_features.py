@@ -290,7 +290,7 @@ def main(conf: Dict,
             # inp = frame2tensor(tile, "cuda")
             pred2 = model({'image': tile[0].to(device, non_blocking=True)})
             pred2 = {k: v[0].cpu().numpy() for k, v in pred2.items()}
-            original_size = tile[0].numpy()
+            original_size = tile[0][0].numpy()
             if 'keypoints' in pred2:
                 size = np.array(tile[0].shape[-2:][::-1])
                 scales = (original_size / size).astype(np.float32)
