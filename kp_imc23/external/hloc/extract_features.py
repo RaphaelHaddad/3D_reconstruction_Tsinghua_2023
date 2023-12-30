@@ -288,17 +288,17 @@ def main(conf: Dict,
         for i, tile in enumerate(zip(tiles)):
             
             # inp = frame2tensor(tile, "cuda")
-            pred = model({'image': tile[0].to(device, non_blocking=True)})
-            pred = {k: v[0].cpu().numpy() for k, v in pred.items()}
+            pred2 = model({'image': tile[0].to(device, non_blocking=True)})
+            pred2 = {k: v[0].cpu().numpy() for k, v in pred.items()}
 
-            if 'keypoints' in pred:
+            if 'keypoints' in pred2:
                 scales = (original_size / size).astype(np.float32)
-                pred['keypoints'] = (pred['keypoints'] + .5) * scales[None] - .5
+                pred2['keypoints'] = (pred2['keypoints'] + .5) * scales[None] - .5
                 # add keypoint uncertainties scaled to the original resolution
                 x_offset, y_offset = offsets[i]
-                pred['keypoints'][:, 0] += x_offset
-                pred['keypoints'][:, 1] += y_offset
-                keypoints.append(pred['keypoints'])
+                pred2['keypoints'][:, 0] += x_offset
+                pred2['keypoints'][:, 1] += y_offset
+                keypoints.append(pred2['keypoints'])
             
         if(len(keypoints)>2):
             keypoints = np.concatenate(keypoints, axis=0)
