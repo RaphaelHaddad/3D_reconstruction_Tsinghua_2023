@@ -11,6 +11,9 @@ import pprint
 import collections.abc as collections
 import PIL.Image
 import glob
+from kp_imc23.external.superglue.models.utils import frame2tensor
+
+from kp_imc23.preprocessing.utils import split_image_into_regions
 
 from . import extractors, logger
 from .utils.base_model import dynamic_load
@@ -263,10 +266,15 @@ def main(conf: Dict,
         dataset, num_workers=1, shuffle=False, pin_memory=True)
     for idx, data in enumerate(tqdm(loader)):
         name = dataset.names[idx]
+
+        keypoints = []
+        tiles, offsets = split_image_into_regions(data['image'])
+
         pred = model({'image': data['image'].to(device, non_blocking=True)})
         pred = {k: v[0].cpu().numpy() for k, v in pred.items()}
 
         pred['image_size'] = original_size = data['original_size'][0].numpy()
+
         if 'keypoints' in pred:
             size = np.array(data['image'].shape[-2:][::-1])
             scales = (original_size / size).astype(np.float32)
@@ -275,6 +283,27 @@ def main(conf: Dict,
                 pred['scales'] *= scales.mean()
             # add keypoint uncertainties scaled to the original resolution
             uncertainty = getattr(model, 'detection_noise', 1) * scales.mean()
+            keypoints.append(pred['keypoints'])
+
+        for i, tile in enumerate(zip(tiles)):
+            
+            # inp = frame2tensor(tile, "cuda")
+            pred = model({'image': tile[0].to(device, non_blocking=True)})
+            pred = {k: v[0].cpu().numpy() for k, v in pred.items()}
+
+            if 'keypoints' in pred:
+                scales = (original_size / size).astype(np.float32)
+                pred['keypoints'] = (pred['keypoints'] + .5) * scales[None] - .5
+                # add keypoint uncertainties scaled to the original resolution
+                x_offset, y_offset = offsets[i]
+                pred['keypoints'][:, 0] += x_offset
+                pred['keypoints'][:, 1] += y_offset
+                keypoints.append(pred['keypoints'])
+            
+        
+        keypoints = np.concatenate(keypoints, axis=0)
+
+        pred["keypoints"] = keypoints
 
         if as_half:
             for k in pred:
