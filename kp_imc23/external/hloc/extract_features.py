@@ -278,10 +278,10 @@ def main(conf: Dict,
                 preds[name]['scales'] *= scales.mean()
             # add keypoint uncertainties scaled to the original resolution
             uncertainty = getattr(model, 'detection_noise', 1) * scales.mean()
+            print(preds[name])
+            print(dict(preds[name]).keys())
 
-        print(preds[name])
-        print(dict(preds[name]).keys())
-        exit()
+
 
         if as_half:
             for k in preds[name]:
@@ -308,6 +308,8 @@ def main(conf: Dict,
                     raise error
 
             del preds[name]
+
+    exit()
 
     if with_splitting:
         grouped_preds = []
