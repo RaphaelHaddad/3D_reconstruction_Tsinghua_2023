@@ -300,8 +300,8 @@ def main(conf: Dict,
                 pred['keypoints'][:, 1] += y_offset
                 keypoints.append(pred['keypoints'])
             
-        
-        keypoints = np.concatenate(keypoints, axis=0)
+        if(len(keypoints)>2):
+            keypoints = np.concatenate(keypoints, axis=0)
 
         pred["keypoints"] = keypoints
 
