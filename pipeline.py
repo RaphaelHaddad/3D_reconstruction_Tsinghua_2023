@@ -65,7 +65,7 @@ def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue",
     preprocess(paths, image_list, args=None, matcher=preprocess_matcher, num_pairs=num_pairs)
 
     # Database
-    database_colmap_run(paths, image_list, dataset, scene, args=None)
+    return database_colmap_run(paths, image_list, dataset, scene, args=None)
 
 if __name__ == '__main__':
     main()

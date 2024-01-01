@@ -103,6 +103,6 @@ def database_colmap_run(
             out_results[dataset][scene][key1]["t"] = deepcopy(np.array(im.tvec))
         return out_results
     out_results = result_analysis(sparse_model, dataset, scene)
-    create_submission(out_results, image_list, paths.submission_path, dataset, scene)
+    return create_submission(out_results, image_list, paths.submission_path, dataset, scene)
 
     
