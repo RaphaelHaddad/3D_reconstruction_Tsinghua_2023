@@ -13,6 +13,8 @@ import gc
 def database_colmap_run(
     paths: DataPaths,
     image_list,
+    dataset,
+    scene,
     args: argparse.Namespace
 ) -> Tuple[Dict[str, Any], bool]:
     """Save the data into database and run pycolmap on the database.
@@ -87,7 +89,8 @@ def database_colmap_run(
 
     gc.collect()
     # Create submission
-    # image_list = os.listdir(image_dir_used)
-    # create_submission(out_results, image_list, paths.submission_path,dataset,scene)
+    image_list = os.listdir(paths.rotated_image_dir)
+    out_results = {}
+    create_submission(out_results, image_list, paths.submission_path, dataset, scene)
 
     
