@@ -52,7 +52,7 @@ class DataPaths:
         self.keypoints_final_path = self.output_scene_dir / "keypoints_final.h5"
         self.database_path = self.output_scene_dir / "database.db"
         self.colmap_output = self.output_scene_dir / "colmap_rec"
-        self.submission_path = self.output_scene_dir / "submission.csv"
+        self.submission_path = output_dir / "submission.csv"
 
         # for cropping
         self.cropped_image_dir = self.output_scene_dir / "images_cropped"
