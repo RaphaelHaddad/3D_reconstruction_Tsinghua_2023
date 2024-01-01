@@ -43,7 +43,7 @@ def configurate(data_dir, output_dir, dataset, scene, mode):
     paths = DataPaths(Path(data_dir), Path(output_dir), dataset, scene, mode)
     return paths
 
-def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue", num_pairs=10):
+def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue", num_pairs=10, submission_path="./submission.csv"):
     # paths = configurate(
     #     data_dir=".",
     #     output_dir="./output",
@@ -58,6 +58,7 @@ def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue",
         scene=scene,
         mode=mode
     )
+    paths.submission_path = submission_path
 
     image_list = os.listdir(paths.input_dir_images)
 
