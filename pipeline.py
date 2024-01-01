@@ -61,6 +61,8 @@ def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue",
 
     image_list = os.listdir(paths.input_dir_images)
 
+    print(f"Pipeline started working on {mode}/{dataset}/{scene}...")
+
     # preprocess images
     preprocess(paths, image_list, args=None, matcher=preprocess_matcher, num_pairs=num_pairs)
 

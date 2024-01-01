@@ -31,7 +31,7 @@ def preprocess(
         args (argparse.Namespace): Arguments.
     """
 
-    print(f"Image List: {image_list}")
+    #print(f"Image List: {image_list}")
 
     # # rotate images
     rotate_images(paths.input_dir_images, image_list, paths.rotated_image_dir, paths.rotation_model_weights)
@@ -39,11 +39,11 @@ def preprocess(
     # # split images
     #image_list = split_images(paths.rotated_image_dir, image_list, paths.split_image_dir)
     
-    print(f"test: {paths.split_image_dir}")
+    #print(f"test: {paths.split_image_dir}")
 
     # # compute pairs 
     compute_pairs(paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
-    print(f"test: {paths.split_image_dir}")
+    #print(f"test: {paths.split_image_dir}")
     # # # extract important keypoints 
     extract_features.main(
             conf= {
