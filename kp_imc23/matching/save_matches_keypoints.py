@@ -140,7 +140,7 @@ def create_submission(out_results, image_list, csv_path, dataset, scene):
 
         for image in image_list:
             path = f'{dataset}/{scene}/images/{image}'
-            if image in out_results[dataset][scene]:
+            if path in out_results[dataset][scene]:
                 R = out_results[dataset][scene][path]['R'].reshape(-1)
                 T = out_results[dataset][scene]['t'].reshape(-1)
             else:
