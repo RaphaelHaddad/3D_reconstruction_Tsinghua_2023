@@ -1,4 +1,7 @@
+from copy import deepcopy
 from typing import Any, Dict, Tuple
+
+import numpy as np
 from kp_imc23.config.paths import DataPaths
 import argparse
 import os
@@ -90,7 +93,16 @@ def database_colmap_run(
     gc.collect()
     # Create submission
     image_list = os.listdir(paths.rotated_image_dir)
-    out_results = {}
+    # Results analysis
+    def result_analysis(map, dataset, scene) :
+        out_results = {dataset:{scene:{}}}
+        for k, im in map.images.items():
+            key1 = f'{dataset}/{scene}/images/{im.name}'
+            out_results[dataset][scene][key1] = {}
+            out_results[dataset][scene][key1]["R"] = deepcopy(im.rotmat())
+            out_results[dataset][scene][key1]["t"] = deepcopy(np.array(im.tvec))
+        return out_results
+    out_results = result_analysis(sparse_model, dataset, scene)
     create_submission(out_results, image_list, paths.submission_path, dataset, scene)
 
     
