@@ -146,3 +146,4 @@ def create_submission(out_results, image_list, csv_path, dataset, scene):
                 R = np.eye(3).reshape(-1)
                 T = np.zeros((3))
             f.write(f'{image},{dataset},{scene},{arr_to_str(R)},{arr_to_str(T)}\n')
+        print(f"Submission file written: {csv_path}")
