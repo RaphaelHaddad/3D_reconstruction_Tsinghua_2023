@@ -123,7 +123,7 @@ def import_into_colmap(database_path, keypoint_path, image_dir_used, matches_pat
 
 
 def arr_to_str(arr):
-    return ','.join(map(str, arr))
+    return ';'.join(map(str, arr))
 
 
 
