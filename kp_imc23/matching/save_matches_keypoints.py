@@ -142,7 +142,7 @@ def create_submission(out_results, image_list, csv_path, dataset, scene):
             path = f'{dataset}/{scene}/images/{image}'
             if path in out_results[dataset][scene]:
                 R = out_results[dataset][scene][path]['R'].reshape(-1)
-                T = out_results[dataset][scene]['t'].reshape(-1)
+                T = out_results[dataset][scene][path]['t'].reshape(-1)
             else:
                 R = np.eye(3).reshape(-1)
                 T = np.zeros((3))
