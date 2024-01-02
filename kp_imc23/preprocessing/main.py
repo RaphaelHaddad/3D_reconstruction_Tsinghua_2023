@@ -1,6 +1,7 @@
 import argparse
 import os
 import pickle
+from math import exp
 
 from typing import Any, Dict, Tuple
 
@@ -43,7 +44,8 @@ def preprocess(
     #print(f"test: {paths.split_image_dir}")
 
     # # compute pairs 
-    if len(image_list) > 100: num_pairs = min(num_pairs, 10)
+    if len(image_list) > 100:
+        num_pairs = int(25*exp(-0.0005*len(image_list)) + 2)
     compute_pairs(paths.rotated_image_dir, image_list, paths.features_retrieval, paths.pairs_path, num_pairs=num_pairs)
     #print(f"test: {paths.split_image_dir}")
     # # # extract important keypoints 
