@@ -23,6 +23,7 @@ def preprocess(
     args: argparse.Namespace,
     matcher = ["lightglue"], # "lightglue" or "loftr" or "dkm"
     num_pairs: int = 10,
+    with_splitting: bool = True
 ) -> Tuple[Dict[str, Any], bool]:
     """Preprocess images and output rotated images, and computed pairs.
 
@@ -62,6 +63,7 @@ def preprocess(
             image_dir=paths.rotated_image_dir,
             image_list=image_list,
             feature_path=paths.features_path,
+            with_splitting=with_splitting
         )
     
     matchers_confs = {

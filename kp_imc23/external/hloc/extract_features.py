@@ -241,7 +241,8 @@ def main(conf: Dict,
          as_half: bool = True,
          image_list: Optional[Union[Path, List[str]]] = None,
          feature_path: Optional[Path] = None,
-         overwrite: bool = False) -> Path:
+         overwrite: bool = False,
+         with_splitting: bool = True) -> Path:
     logger.info('Extracting local features with configuration:'
                 f'\n{pprint.pformat(conf)}')
 
@@ -264,11 +265,17 @@ def main(conf: Dict,
 
     loader = torch.utils.data.DataLoader(
         dataset, num_workers=1, shuffle=False, pin_memory=True)
+    
+    with_splitting = with_splitting if len(dataset) <= 100 else False
+    logger.info(f'Extracting features for {len(dataset)} images with splitting {"enabled" if with_splitting else "disabled"}.')
     for idx, data in enumerate(tqdm(loader)):
         name = dataset.names[idx]
 
         keypoints = []
-        tiles, offsets = split_image_into_regions(data['image'])
+        if with_splitting:
+            tiles, offsets = split_image_into_regions(data['image'])
+        else:
+            tiles, offsets = None, None
 
         pred = model({'image': data['image'].to(device, non_blocking=True)})
         pred = {k: v[0].cpu().numpy() for k, v in pred.items()}
@@ -285,21 +292,22 @@ def main(conf: Dict,
             uncertainty = getattr(model, 'detection_noise', 1) * scales.mean()
             # keypoints.append(pred['keypoints'])
 
-        for i, tile in enumerate(zip(tiles)):
-            
-            # inp = frame2tensor(tile, "cuda")
-            pred2 = model({'image': tile[0].to(device, non_blocking=True)})
-            pred2 = {k: v[0].cpu().numpy() for k, v in pred2.items()}
-            tile_size = (data['original_size'][0]/4).numpy()
-            if 'keypoints' in pred2:
-                size = np.array(tile[0].shape[-2:][::-1])
-                scales = (tile_size / size).astype(np.float32)
-                pred2['keypoints'] = (pred2['keypoints'] + .5) * scales[None] - .5
-                # add keypoint uncertainties scaled to the original resolution
-                x_offset, y_offset = offsets[i]
-                pred2['keypoints'][:, 0] += x_offset
-                pred2['keypoints'][:, 1] += y_offset
-                keypoints.append(pred2['keypoints'])
+        if with_splitting:
+            for i, tile in enumerate(zip(tiles)):
+                
+                # inp = frame2tensor(tile, "cuda")
+                pred2 = model({'image': tile[0].to(device, non_blocking=True)})
+                pred2 = {k: v[0].cpu().numpy() for k, v in pred2.items()}
+                tile_size = (data['original_size'][0]/4).numpy()
+                if 'keypoints' in pred2:
+                    size = np.array(tile[0].shape[-2:][::-1])
+                    scales = (tile_size / size).astype(np.float32)
+                    pred2['keypoints'] = (pred2['keypoints'] + .5) * scales[None] - .5
+                    # add keypoint uncertainties scaled to the original resolution
+                    x_offset, y_offset = offsets[i]
+                    pred2['keypoints'][:, 0] += x_offset
+                    pred2['keypoints'][:, 1] += y_offset
+                    keypoints.append(pred2['keypoints'])
             
         if(len(keypoints)>2 and len(keypoints)>len(pred["keypoints"])):
             keypoints = np.concatenate(keypoints, axis=0)
