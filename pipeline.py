@@ -66,7 +66,7 @@ def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue",
 
     if scene in forbidden_scene : 
         print(f"Scene {scene} is too big")
-        dumb_submission(image_list, paths.csv_path, dataset, scene)
+        dumb_submission(image_list, submission_path, dataset, scene)
     else :
 
         print(f"Pipeline started working on {mode}/{dataset}/{scene}...")
