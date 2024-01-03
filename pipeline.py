@@ -7,6 +7,7 @@ import os
 
 from kp_imc23.preprocessing.main import preprocess
 from kp_imc23.matching.main import database_colmap_run
+from kp_imc23.matching.save_matches_keypoints import dumb_submission
 
 def configurate(data_dir, output_dir, dataset, scene, mode):
     """Configurate paths for the computation results.
@@ -59,16 +60,22 @@ def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue",
         mode=mode
     )
     paths.submission_path = submission_path
-
+    forbidden_scene = ["trevi_fountain", "notre_dame_front_facade"]
     image_list = os.listdir(paths.input_dir_images)
 
-    print(f"Pipeline started working on {mode}/{dataset}/{scene}...")
 
-    # preprocess images
-    preprocess(paths, image_list, args=None, matcher=preprocess_matcher, num_pairs=num_pairs, with_splitting=with_splitting)
+    if scene in forbidden_scene : 
+        print(f"Scene {scene} is too big")
+        dumb_submission(image_list, paths.csv_path, dataset, scene)
+    else :
 
-    # Database
-    return database_colmap_run(paths, image_list, dataset, scene, args=None)
+        print(f"Pipeline started working on {mode}/{dataset}/{scene}...")
+
+        # preprocess images
+        preprocess(paths, image_list, args=None, matcher=preprocess_matcher, num_pairs=num_pairs, with_splitting=with_splitting)
+
+        # Database
+        return database_colmap_run(paths, image_list, dataset, scene, args=None)
 
 if __name__ == '__main__':
     main()

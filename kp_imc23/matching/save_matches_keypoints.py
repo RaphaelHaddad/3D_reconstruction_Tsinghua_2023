@@ -149,3 +149,21 @@ def create_submission(out_results, image_list, csv_path, dataset, scene):
             f.write(f'{path},{dataset},{scene},{arr_to_str(R)},{arr_to_str(T)}\n')
         print(f"Submission file written: {csv_path}")
     return out_results
+
+
+def dumb_submission(image_list, csv_path, dataset, scene) :
+    # Check if the CSV file already exists
+    file_exists = Path(csv_path).exists()
+
+    # Open the CSV file in append mode
+    with open(csv_path, 'a') as f:
+        # If the file doesn't exist, write the header
+        if not file_exists:
+            f.write('image_path,dataset,scene,rotation_matrix,translation_vector\n')
+
+        for image in image_list:
+            path = f'{dataset}/{scene}/images/{image}'
+            R = np.eye(3).reshape(-1)
+            T = np.zeros((3))
+            f.write(f'{path},{dataset},{scene},{arr_to_str(R)},{arr_to_str(T)}\n')
+        print(f"Submission file written: {csv_path}")
