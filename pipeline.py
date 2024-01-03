@@ -64,8 +64,8 @@ def main(data_dir, dataset, scene, mode="train", preprocess_matcher="lightglue",
     image_list = os.listdir(paths.input_dir_images)
 
 
-    if scene in forbidden_scene : 
-        print(f"Scene {scene} is too big")
+    if dataset == "phototourism" : 
+        print(f"Skipping {scene} ")
         dumb_submission(image_list, submission_path, dataset, scene)
     else :
 
