@@ -59,6 +59,43 @@ def build_superlist(keypoints):
     return superlist
 
 
+def split_image_into_regions(image):
+
+    # Create empty lists for tiles from both images and their offsets
+    tiles = []
+    offsets = []
+
+    height, width = image.shape[-2], image.shape[-1]
+
+    # Calculate the center coordinates of the image
+    center_x, center_y = width // 2, height // 2
+
+    # Define the four corners of the image with offsets
+    top_left = (0, 0)
+    top_right = (center_x + 0, 0)
+    bottom_left = (0, center_y + 0)
+    bottom_right = (center_x + 0, center_y + 0)
+
+    # Slice the image into four tiles using the specified offsets
+    tile_top_left = image[..., top_left[1]:center_y + 0, top_left[0]:center_x + 0]
+    tile_top_right = image[..., top_right[1]:center_y + 0, center_x + 0:]
+    tile_bottom_left = image[..., center_y + 0:, top_left[0]:center_x + 0]
+    tile_bottom_right = image[..., center_y + 0:, center_x + 0:]
+
+    
+    tiles.append(tile_top_left)
+    tiles.append(tile_top_right)
+    tiles.append(tile_bottom_left)
+    tiles.append(tile_bottom_right)
+
+    offsets.append(top_left)
+    offsets.append(top_right)
+    offsets.append(bottom_left)
+    offsets.append(bottom_right)
+
+    
+    return tiles, offsets
+
 def split_images_into_regions(img1, img2):
     min_h = min(img1.shape[0], img2.shape[0])
     min_w = min(img1.shape[1], img2.shape[1])
@@ -71,7 +108,7 @@ def split_images_into_regions(img1, img2):
     # Split each image into four parts
     w2 = min_w // 2
     h2 = min_h // 2
-
+    
     # Top-left region
     tiles_img1.append(img1[:h2, :w2])
     tiles_img2.append(img2[:h2, :w2])

@@ -61,8 +61,7 @@ class NetVLAD(BaseModel):
                 f'{conf["model_name"]} not in {self.checkpoint_urls.keys()}.')
 
         # Download the checkpoint.
-        checkpoint_path = Path(
-            torch.hub.get_dir(), 'netvlad', conf['model_name'] + '.mat')
+        checkpoint_path = Path('./weights/', 'netvlad', conf['model_name'] + '.mat')
         if not checkpoint_path.exists():
             checkpoint_path.parent.mkdir(exist_ok=True, parents=True)
             url = self.checkpoint_urls[conf['model_name']]

@@ -123,7 +123,7 @@ def import_into_colmap(database_path, keypoint_path, image_dir_used, matches_pat
 
 
 def arr_to_str(arr):
-    return ','.join(map(str, arr))
+    return ';'.join(map(str, arr))
 
 
 
@@ -141,12 +141,13 @@ def create_submission(out_results, image_list, csv_path, dataset, scene):
             f.write('image_path,dataset,scene,rotation_matrix,translation_vector\n')
 
         for image in image_list:
-            if dataset in out_results and scene in out_results[dataset] :
-                if image in out_results[dataset][scene]:
-                    R = out_results[dataset][scene][image]['R'].reshape(-1)
-                    T = out_results[dataset][scene]['t'].reshape(-1)
-                else:
-                    R = np.eye(3).reshape(-1)
-                    T = np.zeros((3))
-                f.write(f'{image},{dataset},{scene},{arr_to_str(R)},{arr_to_str(T)}\n')
-    print(f"Submission file written:[{csv_path}]")
+            path = f'{dataset}/{scene}/images/{image}'
+            if path in out_results[dataset][scene]:
+                R = out_results[dataset][scene][path]['R'].reshape(-1)
+                T = out_results[dataset][scene][path]['t'].reshape(-1)
+            else:
+                R = np.eye(3).reshape(-1)
+                T = np.zeros((3))
+            f.write(f'{path},{dataset},{scene},{arr_to_str(R)},{arr_to_str(T)}\n')
+        print(f"Submission file written: {csv_path}")
+    return out_results

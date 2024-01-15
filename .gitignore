@@ -13,6 +13,6 @@ train/
 test/
 weights/
 output/
-
+!output/heritage/cyprus/colmap.db
 *.tar.gz
-test.py
+colmap/

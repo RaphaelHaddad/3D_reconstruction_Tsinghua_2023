@@ -16,7 +16,7 @@ class DataPaths:
             raise ValueError(f"Invalid mode: {mode}")
         
         # weights
-        self.model_weights = Path(f"./weights")
+        self.model_weights = Path("./weights")
         self.rotation_model_weights = self.model_weights / "model-vit-ang-loss.h5"
         self.loftr_model_weights = self.model_weights / "outdoor_ds.ckpt"
 
@@ -28,6 +28,7 @@ class DataPaths:
         # for preprocessing keypoints
         self.superglue_keypoints_dir = self.output_scene_dir / "superglue" 
         self.loftr_keypoints_dir = self.output_scene_dir / "loftr" 
+        # self.features_path = self.superglue_keypoints_dir / "keypoints.pickle"
         self.superglue_keypoints_pickle = self.superglue_keypoints_dir / "keypoints.pickle"
         self.loftr_keypoints_pickle = self.loftr_keypoints_dir / "keypoints.pickle"
 
@@ -35,6 +36,11 @@ class DataPaths:
         self.rotated_image_dir = self.output_scene_dir / "images_rotated"
         self.rotated_features_path = self.output_scene_dir / "features_rotated.h5"
         
+        # for split 
+        self.split_image_dir = self.output_scene_dir / "images_split"
+        self.split_features_path = self.output_scene_dir / "features_split.h5"
+        
+        self.sfm_dir = self.output_scene_dir / "sparse"
         # for pairs 
         self.pairs_path = self.output_scene_dir / "pairs.txt"
         self.features_retrieval = self.output_scene_dir / "features_retrieval.h5"
@@ -46,7 +52,7 @@ class DataPaths:
         self.keypoints_final_path = self.output_scene_dir / "keypoints_final.h5"
         self.database_path = self.output_scene_dir / "database.db"
         self.colmap_output = self.output_scene_dir / "colmap_rec"
-        self.submission_path = self.output_scene_dir / "submission.csv"
+        self.submission_path = "./submission.csv"
 
         # for cropping
         self.cropped_image_dir = self.output_scene_dir / "images_cropped"
