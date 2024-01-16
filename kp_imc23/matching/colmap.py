@@ -302,6 +302,7 @@ def add_matches(db, matches_path, fname_to_id):
 def COLMAP_mapping(colmap_output, database_path, image_dir_used):
 
     mapper_options = pycolmap.IncrementalMapperOptions()
+    mapper_options.min_model_size = 2
     # mapper_options.feature_quality = pycolmap.FeatureQuality.HIGH
     mapper_options.min_num_matches = 1
     mapper_options.ba_local_max_num_iterations = 200

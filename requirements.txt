@@ -12,4 +12,5 @@ tensorflow
 torch
 transformers
 gdown==4.6.0
-pycolmap
+pycolmap==0.4.0
+fastprogress

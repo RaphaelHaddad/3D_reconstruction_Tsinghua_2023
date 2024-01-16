@@ -68,6 +68,7 @@ def database_colmap_run(
     gc.collect()
     
     mapper_options = pycolmap.IncrementalMapperOptions()
+    mapper_options.min_model_size = 3
     mapper_options.min_num_matches = 10
     mapper_options.ba_global_images_ratio = 1.1   #(default: 1.1)
     mapper_options.ba_global_points_ratio = 1.1   #(default: 1.1)
