@@ -11,5 +11,5 @@ scikit-learn
 tensorflow
 torch
 transformers
-gdown
+gdown==4.6.0
 pycolmap
