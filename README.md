@@ -19,6 +19,9 @@ This repository contains the code and resources for our participation in the Ima
 ## Introduction
 The IMC 2023 aims to generate 3D scenes using images. This report describes our solution, which uses state-of-the-art methods for pair-making with Cosplace or Eigenplaces, combined with powerful detector-based and detector-free methods for keypoint extraction and matching. We utilized the Structure from Motion software COLMAP and achieved a high rank in the IMC 2023 competition on Kaggle.
 
+<img width="820" alt="image" src="https://github.com/user-attachments/assets/fd15358a-53b1-434c-9be5-32ec4880cadc" />
+
+
 ## Data
 The dataset provided by the challenge consists of various categories of scenes, each containing between 30 and 700 images. The dataset also includes a CSV file with rotation matrices and translation vectors for each image in the training dataset. Additionally, each folder contains COLMAP files for 3D scene reconstruction.
 
